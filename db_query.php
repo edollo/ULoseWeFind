@@ -1,8 +1,10 @@
 <?php 
+// AJAX for dynamic request //OPT 
 
-include("db_con.php");
 
 //error_reporting(0);
+include("db_con.php");
+
 if(isset($_POST['login_btn'])) {
 
 $bindun = $_POST["uname"];
