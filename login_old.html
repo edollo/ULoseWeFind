@@ -7,38 +7,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		<script>
-		function UserValidator(str) {
-			if (str == "") {
-				document.getElementById("Valid").innerHTML = "";
-				return;
-			} else { 
-				if (window.XMLHttpRequest) {
-					// code for IE7+, Firefox, Chrome, Opera, Safari
-					xmlhttp = new XMLHttpRequest();
-				} else {
-					// code for IE6, IE5
-					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				xmlhttp.onreadystatechange = function() {
-					if (this.readyState == 4 && this.status == 200) {
-						document.getElementById("Valid").innerHTML = this.responseText;
-					}
-				};
-
-				xmlhttp.open("GET","db_query.php?ValidateUname="+str,true);
-				xmlhttp.send();
-				
-				//xmlhttp.open("POST","db_query.php",true);
-				//xhttp.setRequestHeader("Content-type", "x-www-form-urlencoded");
-				//xmlhttp.send("ValidateUname=" + str);
-			}
-		}
-		</script>
 	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
-		
 			<div id="wrapper">
 
 				<!-- Header -->
@@ -75,8 +46,8 @@
 							<section>
 								<form method="POST" action="db_query.php">
 									<div class="container">
-									<input type="text" placeholder="Enter Username" maxlength="15" name="uname" required onchange="UserValidator(this.value)">	<br />
-									<p id="Valid"></p>
+
+									<input type="text" placeholder="Enter Username" maxlength="15" name="uname" required>	<br />
 									<input type="password" placeholder="Enter Password" name="psw" required> <br /><br />
 									<input type="submit" name="login_btn" value="Login">
 									</div>
