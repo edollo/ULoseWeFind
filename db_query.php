@@ -1,42 +1,46 @@
-<?php 
+﻿<?php 
 // AJAX for dynamic request //OPT 
-
-
 
 //error_reporting(0);
 include("db_con.php");
 
-if(isset($_POST['login_btn'])) {
+if(isset($_GET['psw'])) {
 
-$bindun = $_POST["uname"];
-//$bindpw = md5($_POST["psw"]); 
-$bindpw = $_POST["psw"];
+$bindpw = $_GET['psw'];
+$bindun = $_GET['uname'];
 
 $query = "SELECT Email, Passwort FROM Person WHERE Email ='".$bindun."'";
 
-
 	if ($result = $db->query($query)) {
+		
+		if (mysqli_num_rows($result) !== 0)
+		{	
+			/* fetch associative array */
+			while ($row = $result->fetch_assoc()) {
+				if ($bindun == $row["Email"] and $bindpw == $row["Passwort"])  {
 
-		/* fetch associative array */
-		while ($row = $result->fetch_assoc()) {
-			if ($bindun == $row["Email"] and $bindpw == $row["Passwort"])  {
-
-				header ('Location:declare_new_object.html');				
+					//header('Location:declare_new_object.html');
+		
+					echo "valid";
+				}
+				else {
+					echo "invalidpw";
+				}
 			}
-			else {
-				echo "benutzerinfos falsch";
-			}
-		}
-
-		/* free result set */
-		$result->free();
+			
+			/* free result set */
+			$result->free();
+		}	
+		else{
+			
+			echo "invaliduname";	
+			
+		}	
 	}	
-	else{
-		echo "benutzer nicht vorhanden";
-	}
+	
 
 $db->close();
-	
+		
 }
 
 
@@ -48,7 +52,23 @@ if(isset($_POST['signup_btn'])) {
 
 if(isset($_GET['ValidateUname'])) {
 
-	echo "wrong lol lel";
+	$bindun = $_GET['ValidateUname'];
+	$query = "SELECT Email FROM Person WHERE Email ='".$bindun."'";
+
+	if ($result = $db->query($query)) {
+		
+		if (mysqli_num_rows($result) == 0)
+		{
+			echo "invalid";
+		}
+		else
+		{
+			echo "isvalid";
+		}
+	}	
+	
+$db->close();
+
 
 }
 

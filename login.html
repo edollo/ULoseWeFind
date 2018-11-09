@@ -8,10 +8,58 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<script>
-		function UserValidator(str) {
-			if (str == "") {
+		function UserValidator(uname) {
+			
+			if (uname == "") {
+				
 				document.getElementById("Valid").innerHTML = "";
+				document.getElementById("uname").style.borderBottom = "solid 1px #c9c9c9";
 				return;
+			} else { 
+
+				if (window.XMLHttpRequest) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp = new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						
+						if(this.responseText == "isvalid")
+						{
+							document.getElementById("Valid").innerHTML = "";
+							document.getElementById("uname").style.borderBottom = "solid 1px #c9c9c9";
+						}
+						else 
+						{
+							document.getElementById("Valid").innerHTML = "Benutzer nicht vorhanden";
+							document.getElementById("uname").style.borderBottom = "solid 1px red";
+							
+						}
+					}
+				};
+
+				xmlhttp.open("GET","db_query.php?ValidateUname=" + uname,true);
+				xmlhttp.send();
+				
+				//xmlhttp.open("POST","db_query.php",true);
+				//xhttp.setRequestHeader("Content-type", "x-www-form-urlencoded");
+				//xmlhttp.send("ValidateUname=" + uname);
+			}
+		}
+		
+		
+		
+		function CheckCred(uname_f, pw_f) {
+
+			if (document.getElementById("psw").value == "" || document.getElementById("uname").value == "") {
+			
+				document.getElementById("uname").style.borderBottom = "solid 1px red";
+				document.getElementById("psw").style.borderBottom = "solid 1px red";
+				return;
+				
 			} else { 
 				if (window.XMLHttpRequest) {
 					// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -22,11 +70,20 @@
 				}
 				xmlhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
-						document.getElementById("Valid").innerHTML = this.responseText;
+					
+						if(this.responseText == "invalidpw")
+						{
+							document.getElementById("psw").style.borderBottom = "solid 1px red";
+							document.getElementById("validpw").innerHTML = "Passwort falsch";
+						}
+						else
+						{
+							window.location = 'declare_new_object.html';
+						}
 					}
 				};
 
-				xmlhttp.open("GET","db_query.php?ValidateUname="+str,true);
+				xmlhttp.open("GET","db_query.php?psw=" + pw_f + "&uname=" + uname_f,true);
 				xmlhttp.send();
 				
 				//xmlhttp.open("POST","db_query.php",true);
@@ -73,14 +130,15 @@
 					<div id="main">
 						<div class="inner">
 							<section>
-								<form method="POST" action="db_query.php">
+								<!--<form method="POST" action="CheckCred(uname.value, psw.value)">-->
 									<div class="container">
-									<input type="text" placeholder="Enter Username" maxlength="15" name="uname" required onchange="UserValidator(this.value)">	<br />
-									<p id="Valid"></p>
-									<input type="password" placeholder="Enter Password" name="psw" required> <br /><br />
-									<input type="submit" name="login_btn" value="Login">
+									<input type="text" placeholder="Enter Username" maxlength="15" name="uname" id="uname" onchange="UserValidator(this.value)" required > <br />
+									<p id="Valid" name="Valid"></p>
+									<input type="password" placeholder="Enter Password" name="psw" id="psw" required> <br /><br />
+									<p id="validpw" name="validpw"></p>
+									<input type="submit" name="login_btn" value="Login" onclick="CheckCred(uname.value, psw.value)" >
 									</div>
-								</form>
+								<!--</form>-->
 								<form method="POST" action="db_query.php">
 									<div class="container">
 										<br />
