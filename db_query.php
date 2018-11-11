@@ -4,10 +4,10 @@
 //error_reporting(0);
 include("db_con.php");
 
-if(isset($_GET['psw'])) {
+if(isset($_POST['psw'])) {
 
-$bindpw = $_GET['psw'];
-$bindun = $_GET['uname'];
+$bindpw = $_POST['psw'];
+$bindun = $_POST['uname'];
 
 $query = "SELECT Email, Passwort FROM Person WHERE Email ='".$bindun."'";
 
@@ -50,9 +50,9 @@ if(isset($_POST['signup_btn'])) {
 }
 
 
-if(isset($_GET['ValidateUname'])) {
+if(isset($_POST['ValidateUname'])) {
 
-	$bindun = $_GET['ValidateUname'];
+	$bindun = $_POST['ValidateUname'];
 	$query = "SELECT Email FROM Person WHERE Email ='".$bindun."'";
 
 	if ($result = $db->query($query)) {

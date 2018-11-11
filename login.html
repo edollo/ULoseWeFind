@@ -41,16 +41,16 @@
 					}
 				};
 
-				xmlhttp.open("GET","db_query.php?ValidateUname=" + uname,true);
-				xmlhttp.send();
+				//xmlhttp.open("GET","db_query.php?ValidateUname=" + uname,true);
+				//xmlhttp.send();
 				
-				//xmlhttp.open("POST","db_query.php",true);
-				//xhttp.setRequestHeader("Content-type", "x-www-form-urlencoded");
-				//xmlhttp.send("ValidateUname=" + uname);
+				xmlhttp.open("POST","db_query.php",true);
+				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xmlhttp.send("ValidateUname=" + uname);
 			}
 		}
 		
-		
+		 
 		
 		function CheckCred(uname_f, pw_f) {
 
@@ -83,12 +83,12 @@
 					}
 				};
 
-				xmlhttp.open("GET","db_query.php?psw=" + pw_f + "&uname=" + uname_f,true);
-				xmlhttp.send();
+				//xmlhttp.open("GET","db_query.php?psw=" + pw_f + "&uname=" + uname_f,true);
+				//xmlhttp.send();
 				
-				//xmlhttp.open("POST","db_query.php",true);
-				//xhttp.setRequestHeader("Content-type", "x-www-form-urlencoded");
-				//xmlhttp.send("ValidateUname=" + str);
+				xmlhttp.open("POST","db_query.php",true);
+				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xmlhttp.send("psw=" + pw_f + "&uname=" + uname_f);
 			}
 		}
 		</script>
