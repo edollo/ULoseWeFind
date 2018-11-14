@@ -46,7 +46,7 @@ $db->close();
 
 if(isset($_POST['signup_btn'])) {
 
-    header('Refresh: 0 ; url=sign_up.php');
+    header('Refresh: 0 ; url=sign_up.html');
 }
 
 
@@ -71,5 +71,53 @@ $db->close();
 
 
 }
+
+
+if(isset($_POST['su_psw_2'])) {
+	
+	$bindpw1 = $_POST['su_psw_1'];
+	$bindpw2 = $_POST['su_psw_2'];
+
+	if ($bindpw1 == $bindpw2) 
+	{
+		echo "matching";
+	}
+	else
+	{
+		echo "doesnotmatch";	
+	}
+}
+
+
+
+if(isset($_POST['su_email'])) {
+	
+	$bindemail = $_POST['su_email'];
+	$query = "SELECT Email FROM Person WHERE Email ='".$bindemail."'";
+
+	if ($result = $db->query($query)) {
+		
+		if (mysqli_num_rows($result) !== 0)
+		{
+			echo "exists";
+		}
+		else
+		{
+			echo "existsnot";
+		}
+	}	
+}
+
+
+if(isset($_POST['su_signup_btn'])) {
+
+	//$query = "SELECT Email FROM Person WHERE Email ='".$bindemail."'";
+
+	//muss noch implementiert werden
+
+	echo "success";
+ 
+}
+
 
 ?>
