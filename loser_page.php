@@ -10,7 +10,7 @@
 
 session_start();
 include("db_con.php");
-include("lib_core.php");
+include("lib/lib_core.php");
 
 /*$uid = $_POST["uname"];
 $_SESSION['uid'] = $uid;*/
