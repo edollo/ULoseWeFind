@@ -1,5 +1,14 @@
 ﻿<?php 
-// AJAX for dynamic request //OPT 
+####################################################
+#+------------------------------------------------+#
+#|Project:       ULWF                             |#
+#|Filename:      lib.core.php                     |#
+#|Licence:       © Open Licence			          |#
+#|Created by:    Anto Ivankovic / Samuel Maissen  |#
+#+------------------------------------------------+#
+####################################################
+
+// AJAX for dynamic request  
 
 //error_reporting(0);
 include("db_con.php");

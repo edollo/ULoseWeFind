@@ -1,12 +1,16 @@
 <?php 
 session_start();
+include("db_con.php")
+include("lib_core.php");
 
 $uid = $_POST["uname"];
 $_SESSION['uid'] = $uid;
 
-print_r ($_SESSION['uid']);
-?>
 
+$show_objects("edollo");
+
+?>
+<!--
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -17,19 +21,19 @@ print_r ($_SESSION['uid']);
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
-		<!-- Wrapper -->
+		<!-- Wrapper 
 			<div id="wrapper">
 
-				<!-- Header -->
+				<!-- Header 
 					<header id="header">
 						<div class="inner">
 
-							<!-- Logo -->
+							<!-- Logo 
 								<a href="index.html" class="logo">
 									<span class="symbol"><img src="images/logo/logo_cut_icon.jpg" alt="" /></span><span class="title">U Lose - We Find</span>
 								</a>
 
-							<!-- Nav -->
+							<!-- Nav 
 								<nav>
 									<ul>
 										<li><a href="#menu">Menu</a></li>
@@ -39,7 +43,7 @@ print_r ($_SESSION['uid']);
 						</div>
 					</header>
 
-				<!-- Menu -->
+				<!-- Menu 
 					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
@@ -49,7 +53,7 @@ print_r ($_SESSION['uid']);
 						</ul>
 					</nav>
 
-				<!-- Main -->
+				<!-- Main 
 					<div id="main">
 						<div class="inner">
 							<header>
@@ -57,28 +61,9 @@ print_r ($_SESSION['uid']);
 								<p>A Webservice to help finding your lost valuables.</p>
 							</header>
 							<section class="tiles">
-								<article class="style1">
-									<span class="image">
-										<img src="images/pic01.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Magna</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style2">
-									<span class="image">
-										<img src="images/pic02.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Lorem</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
+							
+							
+
 								<article class="style3">
 									<span class="image">
 										<img src="images/pic03.jpg" alt="" />
@@ -90,11 +75,14 @@ print_r ($_SESSION['uid']);
 										</div>
 									</a>
 								</article>
+						
+						
+
 							</section>
 						</div>
 					</div>
 
-				<!-- Footer -->
+				<!-- Footer
 					<footer id="footer">
 						<div class="inner">
 							<section>
@@ -116,7 +104,7 @@ print_r ($_SESSION['uid']);
 
 			</div>
 
-		<!-- Scripts -->
+		<!-- Scripts 
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
@@ -124,4 +112,4 @@ print_r ($_SESSION['uid']);
 			<script src="assets/js/main.js"></script>
 
 	</body>
-</html>
+</html> -->

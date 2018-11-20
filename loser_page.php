@@ -7,9 +7,17 @@
 #|Created by:    Anto Ivankovic / Samuel Maissen  |#
 #+------------------------------------------------+#
 ####################################################
-?>
-<!DOCTYPE HTML>
 
+session_start();
+include("db_con.php");
+include("lib_core.php");
+
+/*$uid = $_POST["uname"];
+$_SESSION['uid'] = $uid;*/
+
+?>
+
+<!DOCTYPE HTML>
 <html>
 	<head>
 		<title>Phantom by HTML5 UP</title>
@@ -46,9 +54,8 @@
 						<h2>Menu</h2>
 						<ul>
 							<li><a href="index.html">Home</a></li>
-							<!--<li><a href="loser_page.html">My Objects</a></li>
-							<li><a href="declare_new_object.html">New Object</a></li>-->
-							<li><a href="login.html">Sign in / Sign up</a></li>
+							<li><a href="loser_page.html">My Objects</a></li>
+							<li><a href="logout.php">Logout</a></li>
 						</ul>
 					</nav>
 
@@ -59,15 +66,11 @@
 								<h1>U Lose We Find</h1>
 								<p>A Webservice to help finding your lost valuables.</p>
 							</header>
-							
-							<span class="image main"><img src="images/pic13.jpg" alt="" /></span>
-							<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel venenatis mauris vehicula hendrerit.</p>
-							<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+							<?php $show_objects("edollo"); ?>
 						</div>
 					</div>
 
-				<!-- Footer -->
+				<!-- Footer-->
 					<footer id="footer">
 						<div class="inner">
 							<section>
@@ -97,4 +100,4 @@
 			<script src="assets/js/main.js"></script>
 
 	</body>
-</html>
+</html> 
