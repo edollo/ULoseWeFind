@@ -2,11 +2,12 @@
 ####################################################
 #+------------------------------------------------+#
 #|Project:       ULWF                             |#
-#|Filename:      lib.core.php                     |#
+#|Filename:      login.html                       |#
 #|Licence:       © Open Licence			          |#
 #|Created by:    Anto Ivankovic / Samuel Maissen  |#
 #+------------------------------------------------+#
 ####################################################
+session_start();
 ?>
 <!DOCTYPE HTML>
 
@@ -51,9 +52,6 @@
 					}
 				};
 
-				//xmlhttp.open("GET","db_query.php?ValidateUname=" + uname,true);
-				//xmlhttp.send();
-				
 				xmlhttp.open("POST","db_query.php",true);
 				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				xmlhttp.send("ValidateUname=" + uname);
@@ -62,7 +60,7 @@
 		
 		 
 		
-		function CheckCred(uname_f, pw_f) {
+		function CheckCred(login_btn_f, uname_f, pw_f) {
 
 			if (document.getElementById("psw").value == "" || document.getElementById("uname").value == "") {
 			
@@ -86,19 +84,16 @@
 							document.getElementById("psw").style.borderBottom = "solid 1px red";
 							document.getElementById("validpw").innerHTML = "Passwort falsch";
 						}
-						else
+						else if (this.responseText == "valid")
 						{
 							window.location = 'loser_page.php';
 						}
 					}
 				};
-
-				//xmlhttp.open("GET","db_query.php?psw=" + pw_f + "&uname=" + uname_f,true);
-				//xmlhttp.send();
 				
 				xmlhttp.open("POST","db_query.php",true);
 				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				xmlhttp.send("psw=" + pw_f + "&uname=" + uname_f);
+				xmlhttp.send("login_btn=" + login_btn_f + "&psw=" + pw_f + "&uname=" + uname_f);
 			}
 		}
 		</script>
@@ -146,7 +141,7 @@
 									<p id="Valid" name="Valid"></p>
 									<input type="password" placeholder="Enter Password" name="psw" id="psw" required> <br /><br />
 									<p id="validpw" name="validpw"></p>
-									<input type="submit" name="login_btn" value="Login" onclick="CheckCred(uname.value, psw.value)" >
+									<input type="submit" name="login_btn" value="Login" onclick="CheckCred(this.value, uname.value, psw.value)" >
 									</div>
 								<!--</form>-->
 								<form method="POST" action="db_query.php">

@@ -1,19 +1,25 @@
-<?php 
+<?php
 ####################################################
 #+------------------------------------------------+#
 #|Project:       ULWF                             |#
-#|Filename:      lib.core.php                     |#
+#|Filename:      loser_page.php                   |#
 #|Licence:       © Open Licence			          |#
 #|Created by:    Anto Ivankovic / Samuel Maissen  |#
 #+------------------------------------------------+#
 ####################################################
-
 session_start();
+
+if(!isset($_SESSION['uname'])) {
+	//überläufig 
+	header('Location:login.html');
+    die; 
+}
+
+$uname = $_SESSION['uname'];
+
 include("db_con.php");
 include("lib/lib_core.php");
 
-/*$uid = $_POST["uname"];
-$_SESSION['uid'] = $uid;*/
 
 ?>
 
@@ -66,7 +72,7 @@ $_SESSION['uid'] = $uid;*/
 								<h1>U Lose We Find</h1>
 								<p>A Webservice to help finding your lost valuables.</p>
 							</header>
-							<?php $show_objects("edollo"); ?>
+							<?php $show_objects("edollo"); echo $uname; ?>
 						</div>
 					</div>
 
