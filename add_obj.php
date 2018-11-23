@@ -1,5 +1,29 @@
-<!DOCTYPE HTML>
+<?php
+####################################################
+#+------------------------------------------------+#
+#|Project:       ULWF                             |#
+#|Filename:      loser_page.php                   |#
+#|Licence:       © Open Licence			          |#
+#|Created by:    Anto Ivankovic / Samuel Maissen  |#
+#+------------------------------------------------+#
+####################################################
+session_start();
 
+if(!isset($_SESSION['uname'])) {
+	//überläufig 
+	header('Location:login.html');
+    die; 
+}
+
+$uname = $_SESSION['uname'];
+
+include("db_con.php");
+include("lib/lib_core.php");
+
+
+?>
+
+<!DOCTYPE HTML>
 <html>
 	<head>
 		<title>Phantom by HTML5 UP</title>
@@ -36,10 +60,8 @@
 						<h2>Menu</h2>
 						<ul>
 							<li><a href="index.html">Home</a></li>
-							<li><a href="generic.html">Ipsum veroeros</a></li>
-							<li><a href="generic.html">Tempus etiam</a></li>
-							<li><a href="generic.html">Consequat dolor</a></li>
-							<li><a href="elements.html">Elements</a></li>
+							<li><a href="loser_page.php">My Objects</a></li>
+							<li><a href="logout.php">Logout</a></li>
 						</ul>
 					</nav>
 
@@ -50,45 +72,27 @@
 								<h1>U Lose We Find</h1>
 								<p>A Webservice to help finding your lost valuables.</p>
 							</header>
-							<section class="tiles">
-								<article class="style1">
-									<span class="image">
-										<img src="images/pic01.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Magna</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style2">
-									<span class="image">
-										<img src="images/pic02.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Lorem</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style3">
-									<span class="image">
-										<img src="images/pic03.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Feugiat</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-							</section>
+							<div id="add_btn">
+								<form method="POST" action="add_obj.php">
+									<input type="submit" value="+" name="add_button" id="add_button">
+								</form>	
+							</div>
+							<form method="POST" action="/lib/lib_core.php">
+								<div class="container">
+									<input type="text" placeholder="Bezeichnung" name="obj_name" id="obj_name" required> <br />
+									<input type="text" placeholder="Beschreibung" name="obj_desc" id="obj_desc" required> <br />
+									<div class="upload-btn-wrapper">
+										<button>Bild auswählen</button>
+										<input type="file" name="pic" accept="image/*" name="obj_img" id="obj_img">
+									</div>
+									<br /> <br /> <br />
+									<input type="submit" value="Objekt erstellen" name="conf_add_button" id="conf_add_button">
+								</div>
+						    </form>
 						</div>
 					</div>
 
-				<!-- Footer -->
+				<!-- Footer-->
 					<footer id="footer">
 						<div class="inner">
 							<section>
@@ -118,4 +122,4 @@
 			<script src="assets/js/main.js"></script>
 
 	</body>
-</html>
+</html> 

@@ -2001,6 +2001,7 @@ input, select, textarea {
 					ul.actions:not(.fixed) li input[type="submit"],
 					ul.actions:not(.fixed) li input[type="reset"],
 					ul.actions:not(.fixed) li input[type="button"],
+					ul.actions:not(.fixed) li input[type="file"],
 					ul.actions:not(.fixed) li button,
 					ul.actions:not(.fixed) li .button {
 						width: 100%;
@@ -2009,6 +2010,7 @@ input, select, textarea {
 						ul.actions:not(.fixed) li input[type="submit"].icon:before,
 						ul.actions:not(.fixed) li input[type="reset"].icon:before,
 						ul.actions:not(.fixed) li input[type="button"].icon:before,
+						ul.actions:not(.fixed) li input[type="file"].icon:before,
 						ul.actions:not(.fixed) li button.icon:before,
 						ul.actions:not(.fixed) li .button.icon:before {
 							margin-left: -0.5rem;
@@ -2416,6 +2418,7 @@ input, select, textarea {
 	input[type="submit"],
 	input[type="reset"],
 	input[type="button"],
+	input[type="file"],
 	button,
 	.button {
 		-moz-appearance: none;
@@ -2450,6 +2453,7 @@ input, select, textarea {
 		input[type="submit"].icon:before,
 		input[type="reset"].icon:before,
 		input[type="button"].icon:before,
+		input[type="file"].icon:before,
 		button.icon:before,
 		.button.icon:before {
 			margin-right: 0.5em;
@@ -2458,6 +2462,7 @@ input, select, textarea {
 		input[type="submit"].fit,
 		input[type="reset"].fit,
 		input[type="button"].fit,
+		input[type="file"].fit,
 		button.fit,
 		.button.fit {
 			width: 100%;
@@ -2466,6 +2471,7 @@ input, select, textarea {
 		input[type="submit"]:hover,
 		input[type="reset"]:hover,
 		input[type="button"]:hover,
+		input[type="file"]:hover,
 		button:hover,
 		.button:hover {
 			color: #afafaf !important;
@@ -2475,6 +2481,7 @@ input, select, textarea {
 		input[type="submit"]:active,
 		input[type="reset"]:active,
 		input[type="button"]:active,
+		input[type="file"]:active,
 		button:active,
 		.button:active {
 			background-color: rgba(242, 132, 158, 0.1);
@@ -2483,6 +2490,7 @@ input, select, textarea {
 		input[type="submit"].small,
 		input[type="reset"].small,
 		input[type="button"].small,
+		input[type="file"].small,
 		button.small,
 		.button.small {
 			font-size: 0.6em;
@@ -2491,6 +2499,7 @@ input, select, textarea {
 		input[type="submit"].large,
 		input[type="reset"].large,
 		input[type="button"].large,
+		input[type="file"].large,
 		button.large,
 		.button.large {
 			font-size: 1em;
@@ -2499,6 +2508,7 @@ input, select, textarea {
 		input[type="submit"].primary,
 		input[type="reset"].primary,
 		input[type="button"].primary,
+		input[type="file"].primary,
 		button.primary,
 		.button.primary {
 			box-shadow: none;
@@ -2509,6 +2519,7 @@ input, select, textarea {
 			input[type="submit"].primary:hover,
 			input[type="reset"].primary:hover,
 			input[type="button"].primary:hover,
+			input[type="file"].primary:hover,
 			button.primary:hover,
 			.button.primary:hover {
 				background-color: #afafaf;
@@ -2517,6 +2528,7 @@ input, select, textarea {
 			input[type="submit"].primary:active,
 			input[type="reset"].primary:active,
 			input[type="button"].primary:active,
+			input[type="file"].primary:active,
 			button.primary:active,
 			.button.primary:active {
 				background-color: #ee5f81;
@@ -2527,6 +2539,8 @@ input, select, textarea {
 		input[type="reset"]:disabled,
 		input[type="button"].disabled,
 		input[type="button"]:disabled,
+		input[type="file"].disabled,
+		input[type="file"]:disabled,
 		button.disabled,
 		button:disabled,
 		.button.disabled,
@@ -3301,3 +3315,32 @@ input, select, textarea {
 			}
 
 		}
+		
+		
+/* Add Button style and Layout */
+
+#add_btn {
+	margin-left: 70%;
+	margin-top: -8.2%;
+	
+}
+
+
+/* File Input Styling */
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+
+

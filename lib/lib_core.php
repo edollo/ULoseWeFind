@@ -57,6 +57,13 @@ $show_objects = function($username) use ($db)
 };
 
 
+//Erstellen der Funktion Add Objects zum Hinzufügen von Objekten
+$add_objects = function($username) use ($db)
+{
+	
+	
+};
+
 
 
 

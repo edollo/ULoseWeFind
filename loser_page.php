@@ -60,7 +60,7 @@ include("lib/lib_core.php");
 						<h2>Menu</h2>
 						<ul>
 							<li><a href="index.html">Home</a></li>
-							<li><a href="loser_page.html">My Objects</a></li>
+							<li><a href="loser_page.php">My Objects</a></li>
 							<li><a href="logout.php">Logout</a></li>
 						</ul>
 					</nav>
@@ -72,6 +72,11 @@ include("lib/lib_core.php");
 								<h1>U Lose We Find</h1>
 								<p>A Webservice to help finding your lost valuables.</p>
 							</header>
+							<div id="add_btn">
+								<form method="POST" action="add_obj.php">
+									<input type="submit" value="+">
+								</form>	
+							</div>
 							<?php $show_objects($uname); ?>
 						</div>
 					</div>
