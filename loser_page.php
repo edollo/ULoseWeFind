@@ -72,7 +72,7 @@ include("lib/lib_core.php");
 								<h1>U Lose We Find</h1>
 								<p>A Webservice to help finding your lost valuables.</p>
 							</header>
-							<?php $show_objects("edollo"); echo $uname; ?>
+							<?php $show_objects($uname); ?>
 						</div>
 					</div>
 
