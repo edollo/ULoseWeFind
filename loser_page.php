@@ -18,7 +18,7 @@ if(!isset($_SESSION['uname'])) {
 $uname = $_SESSION['uname'];
 
 include("db_con.php");
-include("lib/lib_core.php");
+include("lib_core.php");
 
 
 ?>
@@ -77,7 +77,7 @@ include("lib/lib_core.php");
 									<input type="submit" value="+">
 								</form>	
 							</div>
-							<?php $show_objects($uname); ?>
+							<?php $show_objects("edollo"); ?>
 						</div>
 					</div>
 

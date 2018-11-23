@@ -18,7 +18,7 @@ if(!isset($_SESSION['uname'])) {
 $uname = $_SESSION['uname'];
 
 include("db_con.php");
-include("lib/lib_core.php");
+include("lib_core.php");
 
 
 ?>
@@ -51,10 +51,8 @@ include("lib/lib_core.php");
 										<li><a href="#menu">Menu</a></li>
 									</ul>
 								</nav>
-
 						</div>
 					</header>
-
 				<!-- Menu -->
 					<nav id="menu">
 						<h2>Menu</h2>
@@ -77,13 +75,13 @@ include("lib/lib_core.php");
 									<input type="submit" value="+" name="add_button" id="add_button">
 								</form>	
 							</div>
-							<form method="POST" action="/lib/lib_core.php">
+							<form enctype="multipart/form-data" method="POST" action="lib_core.php">
 								<div class="container">
 									<input type="text" placeholder="Bezeichnung" name="obj_name" id="obj_name" required> <br />
 									<input type="text" placeholder="Beschreibung" name="obj_desc" id="obj_desc" required> <br />
 									<div class="upload-btn-wrapper">
 										<button>Bild auswählen</button>
-										<input type="file" name="pic" accept="image/*" name="obj_img" id="obj_img">
+										<input type="file" accept="image/*" name="obj_img" id="obj_img">
 									</div>
 									<br /> <br /> <br />
 									<input type="submit" value="Objekt erstellen" name="conf_add_button" id="conf_add_button">
