@@ -77,7 +77,7 @@ include("lib_core.php");
 									<input type="submit" value="+">
 								</form>	
 							</div>
-							<?php $show_objects("edollo"); ?>
+							<?php show_objects("edollo", $db); ?>
 						</div>
 					</div>
 

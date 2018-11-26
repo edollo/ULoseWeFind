@@ -12,12 +12,10 @@ include("db_con.php");
 
 
 //Erstellen der Funktion Show Objects zum auslesen und anzeigen von Objekten
-$show_objects = function($username) use ($db) {
-	
+function show_objects($username, $db) {
 	// Datenbankabfrage zur genauen Identifizierung des Benutzers
-	$query = "SELECT idPerson FROM person WHERE Email = '".$username."' LIMIT 1";
+	$query = "SELECT idPerson FROM Person WHERE Email = '".$username."' LIMIT 1";
 	$result = mysqli_query($db, $query);
-	
 	// While Schleife zur verarbeitung der ausgelesenen Daten
 	while($row = mysqli_fetch_array($result))
 	{
@@ -25,7 +23,7 @@ $show_objects = function($username) use ($db) {
 		$p_id = $row[0];
 
 			// Datenbankabfrage zur Ausgabe der richtigen Objekten
-			$query_so = "SELECT Name, Beschreibung, FotoPfad FROM gegenstand WHERE Person_idPerson = '".$p_id."' ORDER BY Name ASC";
+			$query_so = "SELECT Name, Beschreibung, FotoPfad FROM Gegenstand WHERE Person_idPerson = '".$p_id."' ORDER BY Name ASC";
 			$result_so = mysqli_query($db, $query_so);
 			
 				// While Schleife zur Verarbeitung der ausgelesenen Dateien
@@ -54,11 +52,11 @@ $show_objects = function($username) use ($db) {
 					
 				}
 	}
-};
+}
 
 
 // Erstellen der Funktion Add Objects zum Hinzufügen von Objekten
-$add_objects = function($username) use ($db) {
+function add_objects($username, $db) {
     $currentDir = getcwd();
     $uploadDirectory = "/img/";
 
@@ -111,7 +109,7 @@ $add_objects = function($username) use ($db) {
                 echo $error . "vorherstehende Fehler sind aufgetretten" . "\n";
             }
         }
-};
+}
 	
 // Abfrage zur Sicherstellung das die richtige Funktion ausgeführt wird
 if(isset($_POST['conf_add_button'])) {
