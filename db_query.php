@@ -54,7 +54,6 @@ $db->close();
 }
 
 
-
 if(isset($_POST['signup_btn'])) {
 
     header('Refresh: 0 ; url=sign_up.html');
@@ -79,7 +78,6 @@ if(isset($_POST['ValidateUname'])) {
 	}	
 	
 $db->close();
-
 
 }
 
@@ -122,10 +120,48 @@ if(isset($_POST['su_email'])) {
 
 if(isset($_POST['su_signup_btn'])) {
 
-	//$query = "SELECT Email FROM Person WHERE Email ='".$bindemail."'";
+	$bindemail = $_POST['su_email'];
+	$bindfirstname = $_POST['su_vorname'];
+	$bindlastname = $_POST['su_name'];
+	$bindpw2 = $_POST['su_psw_2'];
 
-	//muss noch implementiert werden
 
+
+
+	$query = "SELECT Email FROM Person WHERE Email ='".$bindemail."'";
+	$queryinsert = "INSERT INTO `Person`(`Name`, `Nachname`, `Email`, `Anrede_idAnrede`, `Passwort`) VALUES ('".$bindfirstname."','".$bindlastname."','".$bindemail."',1,'".$bindpw2."'";
+
+	
+	
+	//noch anzupassen
+	if ($result = $db->query($query)) {
+		
+		if (mysqli_num_rows($result) == 0)
+		{	
+			/* fetch associative array */
+			while ($row = $result->fetch_assoc()) {
+				if ($bindun == $row["Email"] and $bindpw == $row["Passwort"])  {
+
+					//header('Location:declare_new_object.html');	
+					$_SESSION['uname'] = $bindun;
+					echo "valid";
+				}
+				else {
+					echo "invalidpw";
+					session_destroy();
+				}
+			}
+			
+			/* free result set */
+			$result->free();
+		}	
+		else{
+			
+			echo "invaliduname";
+			session_destroy();			
+			
+		}	
+	}		
 	echo "success";
  
 }
