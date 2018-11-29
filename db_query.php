@@ -8,12 +8,11 @@
 #+------------------------------------------------+#
 ####################################################
 session_start();
-// AJAX for dynamic request  
 
 //error_reporting(0);
 include("db_con.php");
 
-
+//Login Prozedur
 if(isset($_POST['login_btn'])) {
 
 $bindpw = $_POST['psw'];
@@ -23,13 +22,14 @@ $query = "SELECT Email, Passwort FROM Person WHERE Email ='".$bindun."'";
 
 	if ($result = $db->query($query)) {
 		
+		//überprüfung benutzer vorhanden
 		if (mysqli_num_rows($result) !== 0)
 		{	
-			/* fetch associative array */
 			while ($row = $result->fetch_assoc()) {
-				if ($bindun == $row["Email"] and $bindpw == $row["Passwort"])  {
 
-					//header('Location:declare_new_object.html');	
+				//überprüfen ob Benutzerdaten korrekt sind
+				if ($bindun == $row["Email"] and $bindpw == $row["Passwort"])  {
+	
 					$_SESSION['uname'] = $bindun;
 					echo "valid";
 				}
@@ -38,9 +38,6 @@ $query = "SELECT Email, Passwort FROM Person WHERE Email ='".$bindun."'";
 					session_destroy();
 				}
 			}
-			
-			/* free result set */
-			$result->free();
 		}	
 		else{
 			
@@ -48,18 +45,18 @@ $query = "SELECT Email, Passwort FROM Person WHERE Email ='".$bindun."'";
 			session_destroy();			
 			
 		}	
-	}	
-$db->close();
+	}
+	$result->free();	
+	$db->close();
 		
 }
 
-
+//weiterleiten auf SignUp Seite
 if(isset($_POST['signup_btn'])) {
-
     header('Refresh: 0 ; url=sign_up.html');
 }
 
-
+//Überprüfung Benutzername
 if(isset($_POST['ValidateUname'])) {
 
 	$bindun = $_POST['ValidateUname'];
@@ -67,6 +64,7 @@ if(isset($_POST['ValidateUname'])) {
 
 	if ($result = $db->query($query)) {
 		
+		//Rückgabewert 0 --> Benutzer nicht vorhanden
 		if (mysqli_num_rows($result) == 0)
 		{
 			echo "invalid";
@@ -81,7 +79,7 @@ $db->close();
 
 }
 
-
+//überprüfung ob passwörter übereinstimmen
 if(isset($_POST['su_psw_2'])) {
 	
 	$bindpw1 = $_POST['su_psw_1'];
@@ -98,7 +96,7 @@ if(isset($_POST['su_psw_2'])) {
 }
 
 
-
+//überprüfung ob email schon vorhanden
 if(isset($_POST['su_email'])) {
 	
 	$bindemail = $_POST['su_email'];
@@ -114,12 +112,15 @@ if(isset($_POST['su_email'])) {
 		{
 			echo "existsnot";
 		}
-	}	
+	}
+
+	$db->close();
 }
 
-
+//Registrierungs Prozedur
 if(isset($_POST['su_signup_btn'])) {
 
+	//werte holen
 	$bindemail = $_POST['su_email'];
 	$bindfirstname = $_POST['su_vorname'];
 	$bindlastname = $_POST['su_name'];
@@ -135,36 +136,14 @@ if(isset($_POST['su_signup_btn'])) {
 	
 	//noch anzupassen
 	if ($result = $db->query($query)) {
-		
-		if (mysqli_num_rows($result) == 0)
-		{	
-			/* fetch associative array */
-			while ($row = $result->fetch_assoc()) {
-				if ($bindun == $row["Email"] and $bindpw == $row["Passwort"])  {
 
-					//header('Location:declare_new_object.html');	
-					$_SESSION['uname'] = $bindun;
-					echo "valid";
-				}
-				else {
-					echo "invalidpw";
-					session_destroy();
-				}
-			}
-			
-			/* free result set */
-			$result->free();
-		}	
-		else{
-			
-			echo "invaliduname";
-			session_destroy();			
-			
-		}	
-	}		
-	echo "success";
+		
+		echo "Registrierung Erfolgreich";
+		
+		
+	}	
+
+	$db->close();
  
 }
-
-
 ?>

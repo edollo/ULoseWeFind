@@ -10,7 +10,6 @@
 session_start();
 
 if(!isset($_SESSION['uname'])) {
-	//überläufig 
 	header('Location:login.html');
     die; 
 }

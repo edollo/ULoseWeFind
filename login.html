@@ -8,6 +8,13 @@
 #+------------------------------------------------+#
 ####################################################
 session_start();
+
+if(isset($_SESSION['uname'])) {
+	header('Location:loser_page.php');
+    die; 
+}
+
+
 ?>
 <!DOCTYPE HTML>
 
