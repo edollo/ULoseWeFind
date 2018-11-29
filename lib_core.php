@@ -7,6 +7,15 @@
 #|Created by:    Anto Ivankovic / Samuel Maissen  |#
 #+------------------------------------------------+#
 ####################################################
+session_start();
+
+if(!isset($_SESSION['uname'])) {
+	//überläufig 
+	header('Location:login.html');
+    die; 
+}
+
+$uname = $_SESSION['uname'];
 
 include("db_con.php");
 
@@ -133,7 +142,7 @@ function add_objects($username, $db) {
 	
 // Abfrage zur Sicherstellung das die richtige Funktion ausgeführt wird
 if(isset($_POST['conf_add_button'])) {
-	 add_objects("edollo", $db);
+	 add_objects($uname, $db);
 }
 
 
