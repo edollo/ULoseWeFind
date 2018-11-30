@@ -22,6 +22,11 @@ include("db_con.php");
 
 //Erstellen der Funktion Show Objects zum auslesen und anzeigen von Objekten
 function show_objects($username, $db) {
+
+	//security
+	$username = mysqli_real_escape_string($db, $username);
+
+
 	// Datenbankabfrage zur genauen Identifizierung des Benutzers
 	$query = "SELECT idPerson FROM Person WHERE Email = '".$username."' LIMIT 1";
 	$result = mysqli_query($db, $query);
@@ -68,6 +73,10 @@ function show_objects($username, $db) {
 function add_objects($username, $db) {
     $currentDir = getcwd();
     $uploadDirectory = "/img/";
+	
+	//security
+	$username = mysqli_real_escape_string($db, $username);
+	
 
 	// Speichern von Fehlern in diesem Array
     $errors = []; 
