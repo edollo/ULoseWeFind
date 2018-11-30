@@ -110,7 +110,7 @@
 
 				xmlhttp.open("POST","db_query.php",true);
 				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				xmlhttp.send("su_email=" + su_email_f );
+				xmlhttp.send("ValidateUname=" + su_email_f);
 			}
 		}
 		
@@ -118,7 +118,8 @@
 		function SignUp(su_signup_btn_f, su_vorname_f, su_name_f, su_email_f, su_psw_1_f, su_psw_2_f) {
 		
 			
-			var test = EmailValidator(su_email_f);
+			//var test = EmailValidator(su_email_f);
+			var test = "lol";
 		
 			if (test == "exists") {
 			
@@ -142,7 +143,8 @@
 						}
 						else
 						{
-							document.write("fail");
+							//document.write("fail");
+							document.write(this.responseText);
 						}
 						
 					}
@@ -150,7 +152,7 @@
 
 				xmlhttp.open("POST","db_query.php",true);
 				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				xmlhttp.send("su_signup_btn=" + su_signup_btn_f + "su_vorname=" + su_vorname_f + "su_name=" + su_name_f + "su_email=" + su_email_f + "su_psw_1=" + su_psw_1_f + "su_psw_2=" + su_psw_2_f );
+				xmlhttp.send("su_signup_btn=" + su_signup_btn_f + "&ValidateUname=" + true + "&su_vorname=" + su_vorname_f + "&su_name=" + su_name_f + "&su_email=" + su_email_f + "&su_psw_1=" + su_psw_1_f + "&su_psw_2=" + su_psw_2_f );
 			}
 		}
 	</script>
