@@ -40,7 +40,7 @@ include("lib_core.php");
 						<div class="inner">
 
 							<!-- Logo -->
-								<a href="index.html" class="logo">
+								<a href="home.php" class="logo">
 									<span class="symbol"><img src="images/logo/logo_cut_icon.jpg" alt="" /></span><span class="title">U Lose - We Find</span>
 								</a>
 
@@ -58,7 +58,7 @@ include("lib_core.php");
 					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="home.php">Home</a></li>
 							<li><a href="loser_page.php">My Objects</a></li>
 							<li><a href="logout.php">Logout</a></li>
 						</ul>

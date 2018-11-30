@@ -1,8 +1,8 @@
-<?php
+<?php 
 ####################################################
 #+------------------------------------------------+#
 #|Project:       ULWF                             |#
-#|Filename:      loser_page.php                   |#
+#|Filename:      index.html                       |#
 #|Licence:       © Open Licence			          |#
 #|Created by:    Anto Ivankovic / Samuel Maissen  |#
 #+------------------------------------------------+#
@@ -17,12 +17,10 @@ if(!isset($_SESSION['uname'])) {
 $uname = $_SESSION['uname'];
 
 include("db_con.php");
-include("lib_core.php");
-
 
 ?>
-
 <!DOCTYPE HTML>
+
 <html>
 	<head>
 		<title>Phantom by HTML5 UP</title>
@@ -50,8 +48,10 @@ include("lib_core.php");
 										<li><a href="#menu">Menu</a></li>
 									</ul>
 								</nav>
+
 						</div>
 					</header>
+
 				<!-- Menu -->
 					<nav id="menu">
 						<h2>Menu</h2>
@@ -69,27 +69,15 @@ include("lib_core.php");
 								<h1>U Lose We Find</h1>
 								<p>A Webservice to help finding your lost valuables.</p>
 							</header>
-							<div id="add_btn">
-								<form method="POST" action="add_obj.php">
-									<input type="submit" value="+" name="add_button" id="add_button">
-								</form>	
-							</div>
-							<form enctype="multipart/form-data" method="POST" action="lib_core.php">
-								<div class="container">
-									<input type="text" placeholder="Bezeichnung" name="obj_name" id="obj_name" required> <br />
-									<input type="text" placeholder="Beschreibung" name="obj_desc" id="obj_desc" required> <br />
-									<div class="upload-btn-wrapper">
-										<button>Bild auswählen</button>
-										<input type="file" accept="image/*" name="obj_img" id="obj_img">
-									</div>
-									<br /> <br /> <br />
-									<input type="submit" value="Objekt erstellen" name="conf_add_button" id="conf_add_button">
-								</div>
-						    </form>
+							
+							<span class="image main"><img src="images/pic13.jpg" alt="" /></span>
+							<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel venenatis mauris vehicula hendrerit.</p>
+							<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
 						</div>
 					</div>
 
-				<!-- Footer-->
+				<!-- Footer -->
 					<footer id="footer">
 						<div class="inner">
 							<section>
@@ -118,4 +106,4 @@ include("lib_core.php");
 			<script src="assets/js/main.js"></script>
 
 	</body>
-</html> 
+</html>
