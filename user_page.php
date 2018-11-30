@@ -7,6 +7,17 @@
 #|Created by:    Anto Ivankovic / Samuel Maissen  |#
 #+------------------------------------------------+#
 ####################################################
+session_start();
+
+if(!isset($_SESSION['uname'])) {
+	header('Location:login.html');
+    die; 
+}
+
+$uname = $_SESSION['uname'];
+
+include("db_con.php");
+
 ?>
 <!DOCTYPE HTML>
 
@@ -27,7 +38,7 @@
 						<div class="inner">
 
 							<!-- Logo -->
-								<a href="index.html" class="logo">
+								<a href="home.php" class="logo">
 									<span class="symbol"><img src="images/logo/logo_cut_icon.jpg" alt="" /></span><span class="title">U Lose - We Find</span>
 								</a>
 
@@ -45,9 +56,10 @@
 					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="finder_page.php">Found something?</a></li>
-							<li><a href="login.html">Sign in / Sign up</a></li>
+							<li><a href="home.php">Home</a></li>
+							<li><a href="loser_page.php">My Objects</a></li>
+							<li><a href="user_page.php">User Page</a></li>
+							<li><a href="logout.php">Logout</a></li>
 						</ul>
 					</nav>
 
@@ -59,10 +71,13 @@
 								<p>A Webservice to help finding your lost valuables.</p>
 							</header>
 							
-							<span class="image main"><img src="images/pic13.jpg" alt="" /></span>
-							<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel venenatis mauris vehicula hendrerit.</p>
-							<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+							<p>Welcome <?php echo $uname ?> <br />
+							You can modify your userdata using the Form down below. </p>
+							
+						<!--					CONSTRUCTION
+						*******FORMULAR ZUR BEARBEITUNG VON BENUTZERDATEN*******
+												CONSTRUCTION				-->
+							
 						</div>
 					</div>
 

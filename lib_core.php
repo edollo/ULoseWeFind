@@ -78,7 +78,7 @@ function add_objects($username, $db) {
 	$username = mysqli_real_escape_string($db, $username);
 	
 
-	// Speichern von Fehlern in diesem Array
+	// Erstellen von Array zur Speicherung von Fehlermeldung
     $errors = []; 
 
 	// Alle zugelassenen File Extensions in Array hinterlegen

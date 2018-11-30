@@ -60,6 +60,7 @@ include("lib_core.php");
 						<ul>
 							<li><a href="home.php">Home</a></li>
 							<li><a href="loser_page.php">My Objects</a></li>
+							<li><a href="user_page.php">User Page</a></li>
 							<li><a href="logout.php">Logout</a></li>
 						</ul>
 					</nav>
