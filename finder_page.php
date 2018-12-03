@@ -50,7 +50,7 @@ include("lib_core.php");
 						<ul>
 							<li><a href="index.html">Home</a></li>
 							<li><a href="finder_page.php">Found something?</a></li>
-							<li><a href="login.html">Sign in / Sign up</a></li>
+							<li><a href="login.php">Sign in / Sign up</a></li>
 						</ul>
 					</nav>
 

@@ -2,7 +2,7 @@
 ####################################################
 #+------------------------------------------------+#
 #|Project:       ULWF                             |#
-#|Filename:      login.html                       |#
+#|Filename:      login.php                        |#
 #|Licence:       © Open Licence			          |#
 #|Created by:    Anto Ivankovic / Samuel Maissen  |#
 #+------------------------------------------------+#
@@ -135,7 +135,7 @@ if(isset($_SESSION['uname'])) {
 						<ul>
 							<li><a href="index.html">Home</a></li>
 							<li><a href="finder_page.php">Found something?</a></li>
-							<li><a href="login.html">Sign in / Sign up</a></li>
+							<li><a href="login.php">Sign in / Sign up</a></li>
 						</ul>
 					</nav>
 

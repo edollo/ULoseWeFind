@@ -2,7 +2,7 @@
 ####################################################
 #+------------------------------------------------+#
 #|Project:       ULWF                             |#
-#|Filename:      index.html                       |#
+#|Filename:      home.php                         |#
 #|Licence:       © Open Licence			          |#
 #|Created by:    Anto Ivankovic / Samuel Maissen  |#
 #+------------------------------------------------+#
@@ -10,7 +10,7 @@
 session_start();
 
 if(!isset($_SESSION['uname'])) {
-	header('Location:login.html');
+	header('Location:login.php');
     die; 
 }
 

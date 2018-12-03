@@ -9,12 +9,6 @@
 ####################################################
 session_start();
 
-#if(!isset($_SESSION['uname'])) {
-#	//überläufig 
-#	header('Location:login.html');
-#    die; 
-#}
-
 $uname = $_SESSION['uname'];
 
 include("db_con.php");

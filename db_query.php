@@ -63,7 +63,7 @@ $query = "SELECT Email, Passwort FROM Person WHERE Email ='".$bindun."'";
 
 //weiterleiten auf SignUp Seite
 if(isset($_POST['signup_btn'])) {
-    header('Refresh: 0 ; url=sign_up.html');
+    header('Refresh: 0 ; url=sign_up.php');
 }
 
 //Überprüfung email
