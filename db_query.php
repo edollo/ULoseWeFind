@@ -138,26 +138,5 @@ if(isset($_POST['su_signup_btn'])) {
 }
 
 
-function get_user_information($db_f) 
-{
-	//uname wird aus security gründen hier ausgelesen
-	$bindun = $_SESSION['uname'];
-	
-	$query = "SELECT Email, Name, Nachname FROM Person WHERE Email ='".$bindun."'";
-	$result = mysqli_query($db_f, $query);
-	
-	// While Schleife zur verarbeitung der ausgelesenen Daten
-	while($row = mysqli_fetch_array($result))
-	{
-		$bindun = $row["Email"];
-		$bindfirstname = $row["Name"];
-		$bindlastname = $row["Nachname"];	
-	}
-
-}
-
-
-
-
 $db->close();
 ?>

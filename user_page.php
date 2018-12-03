@@ -16,10 +16,9 @@ if(!isset($_SESSION['uname'])) {
 
 $uname = $_SESSION['uname'];
 include("db_con.php");
-include("db_query.php");
+include("lib_core.php");
 
-#Auslesen der Benutzerdaten
-get_user_information($db);
+
 ?>
 <!DOCTYPE HTML>
 
@@ -76,9 +75,9 @@ get_user_information($db);
 							You can modify your userdata using the Form down below. </p>
 							<section>
 								<div class="container">
-									<input type="text" value="<?php echo $bindfirstname; ?>"  name="up_vorname" id="up_vorname" required> <br />
-									<input type="text" value="<?php echo $bindlastname; ?>" name="up_name" id="up_name" required> <br />
-									<input type="text" value="<?php echo $bindun; ?>" name="up_email" id="up_email" onchange="EmailValidator(this.value)" required> <br />
+									<input type="text" value="<?php get_user_information($db, "Name"); ?>"  name="up_vorname" id="up_vorname" required> <br />
+									<input type="text" value="<?php get_user_information($db, "Nachname"); ?>" name="up_name" id="up_name" required> <br />
+									<input type="text" value="<?php get_user_information($db, "Email"); ?>" name="up_email" id="up_email" onchange="EmailValidator(this.value)" required> <br />
 									<p id="up_validemail" name="up_validemail"></p>
 									<input type="password" placeholder="Altes Passwort" name="up_psw_old" id="su_psw_old"  onchange="" required> <br />
 									<input type="password" placeholder="Neues Passwort" name="up_psw_1" id="up_psw_1" onchange="PwValidator(this.value, up_psw_2.value)" required> <br />

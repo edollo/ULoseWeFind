@@ -9,11 +9,11 @@
 ####################################################
 session_start();
 
-if(!isset($_SESSION['uname'])) {
-	//überläufig 
-	header('Location:login.html');
-    die; 
-}
+#if(!isset($_SESSION['uname'])) {
+#	//überläufig 
+#	header('Location:login.html');
+#    die; 
+#}
 
 $uname = $_SESSION['uname'];
 
@@ -148,7 +148,39 @@ function add_objects($username, $db) {
 			}
 }
 
+
+function get_user_information($db, $parm) 
+{
+	//uname wird aus security gründen hier ausgelesen
+	$bindun = $_SESSION['uname'];
 	
+	$query = "SELECT Email, Name, Nachname FROM Person WHERE Email ='".$bindun."'";
+	$result = mysqli_query($db, $query);
+	
+	// While Schleife zur verarbeitung der ausgelesenen Daten
+	while($row = mysqli_fetch_array($result))
+	{
+		
+		if($parm == "Email")
+		{
+			echo $row["Email"];
+		
+		}
+		else if($parm == "Name")
+		{
+			echo $row["Name"];
+		
+		}
+		else if($parm == "Nachname")
+		{
+			echo $row["Nachname"];
+		
+		}	
+	}
+}
+
+
+
 // Abfrage zur Sicherstellung das die richtige Funktion ausgeführt wird
 if(isset($_POST['conf_add_button'])) {
 	 add_objects($uname, $db);
