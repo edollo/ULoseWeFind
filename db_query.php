@@ -83,7 +83,20 @@ if(isset($_POST['ValidateUname'])) {
 		}
 		else
 		{
-			echo "exists";
+			
+			//funktioniert nichr
+			//eigener Name ist ok
+			if($row["Email"] == "edollo" )
+			{
+				
+				
+			}
+			else
+			{
+				
+				echo "exists";
+				
+			}
 		}
 	}	
 }

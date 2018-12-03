@@ -30,6 +30,105 @@ include("lib_core.php");
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
+	<script>
+	function PwValidator(up_psw_1_f, up_psw_2_f) {
+
+			if (document.getElementById("up_psw_1").value == "" && document.getElementById("up_psw_2").value == "") {
+			
+				document.getElementById("up_validpw").innerHTML = "";
+				document.getElementById("up_psw_1").style.borderBottom = "solid 1px #c9c9c9";
+				document.getElementById("up_psw_2").style.borderBottom = "solid 1px #c9c9c9";
+				return;
+				
+			} 
+		
+			else if (document.getElementById("up_psw_2").value == "") {
+			
+				document.getElementById("up_validpw").innerHTML = "";
+				document.getElementById("up_psw_2").style.borderBottom = "solid 1px #c9c9c9";
+				return;
+				
+			} 
+			else if (document.getElementById("up_psw_1").value == "" && document.getElementById("up_psw_2").value !== "")
+			{
+				document.getElementById("up_psw_1").style.borderBottom = "solid 1px red";
+				return;
+			}
+			
+			else { 
+				if (window.XMLHttpRequest) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp = new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+					
+						if(this.responseText == "doesnotmatch")
+						{
+							document.getElementById("up_psw_1").style.borderBottom = "solid 1px #c9c9c9";
+							document.getElementById("up_psw_2").style.borderBottom = "solid 1px red";
+							document.getElementById("up_validpw").innerHTML = "Passwort nicht identisch";
+						}
+						else
+						{
+							document.getElementById("up_validpw").innerHTML = "";
+							document.getElementById("up_psw_1").style.borderBottom = "solid 1px #c9c9c9";
+							document.getElementById("up_psw_2").style.borderBottom = "solid 1px #c9c9c9";
+						}
+					}
+				};
+
+				xmlhttp.open("POST","db_query.php",true);
+				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xmlhttp.send("su_psw_1=" + up_psw_1_f + "&su_psw_2=" + up_psw_2_f);
+			}
+		}
+		
+		
+		function EmailValidator(up_email_f) {
+		
+			if (document.getElementById("up_email").value == "") {
+			
+				document.getElementById("up_validemail").innerHTML = "";
+				document.getElementById("up_email").style.borderBottom = "solid 1px #c9c9c9";
+				return;
+				
+			} else { 
+				if (window.XMLHttpRequest) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp = new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+					
+						if(this.responseText == "exists")
+						{
+							document.getElementById("up_email").style.borderBottom = "solid 1px red";
+							document.getElementById("up_validemail").innerHTML = "Account unter Email-Aresse schon vorhanden";
+							return "exists";
+						}
+						else
+						{
+							document.getElementById("up_validemail").innerHTML = "";
+							document.getElementById("up_email").style.borderBottom = "solid 1px #c9c9c9";
+						}
+						
+					}
+				};
+
+				xmlhttp.open("POST","db_query.php",true);
+				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xmlhttp.send("ValidateUname=" + up_email_f);
+			}
+		}
+	
+	</script>
 	<body class="is-preload">
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -75,14 +174,14 @@ include("lib_core.php");
 							You can modify your userdata using the Form down below. </p>
 							<section>
 								<div class="container">
-									<input type="text" value="<?php get_user_information($db, "Name"); ?>"  name="up_vorname" id="up_vorname" required> <br />
-									<input type="text" value="<?php get_user_information($db, "Nachname"); ?>" name="up_name" id="up_name" required> <br />
-									<input type="text" value="<?php get_user_information($db, "Email"); ?>" name="up_email" id="up_email" onchange="EmailValidator(this.value)" required> <br />
+									<input type="text" placeholder="Vorname" value="<?php get_user_information($db, "Name"); ?>"  name="up_vorname" id="up_vorname" required> <br />
+									<input type="text" placeholder="Name" value="<?php get_user_information($db, "Nachname"); ?>" name="up_name" id="up_name" required> <br />
+									<input type="text" placeholder="E-Mail Adresse" value="<?php get_user_information($db, "Email"); ?>" name="up_email" id="up_email" onchange="EmailValidator(this.value)" required> <br />
 									<p id="up_validemail" name="up_validemail"></p>
-									<input type="password" placeholder="Altes Passwort" name="up_psw_old" id="su_psw_old"  onchange="" required> <br />
+									<input type="password" placeholder="Altes Passwort" name="up_psw_old" id="up_psw_old"  onchange="" required> <br />
 									<input type="password" placeholder="Neues Passwort" name="up_psw_1" id="up_psw_1" onchange="PwValidator(this.value, up_psw_2.value)" required> <br />
 									<input type="password" placeholder="Neues Passwort bestätigen" name="up_psw_2" id="up_psw_2" onchange="PwValidator(up_psw_1.value, this.value)" required> <br />
-									<p id="su_validpw" name="su_validpw"></p>
+									<p id="up_validpw" name="up_validpw"></p>
 									<input type="submit" name="up_save_settings_btn" value="Speichern" onclick="" >
 								</div>
 							</section>	

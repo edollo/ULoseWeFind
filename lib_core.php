@@ -154,7 +154,6 @@ function get_user_information($db, $parm)
 	// While Schleife zur verarbeitung der ausgelesenen Daten
 	while($row = mysqli_fetch_array($result))
 	{
-		
 		if($parm == "Email")
 		{
 			echo $row["Email"];
