@@ -15,9 +15,11 @@ if(!isset($_SESSION['uname'])) {
 }
 
 $uname = $_SESSION['uname'];
-
 include("db_con.php");
+include("db_query.php");
 
+#Auslesen der Benutzerdaten
+get_user_information($db);
 ?>
 <!DOCTYPE HTML>
 
@@ -70,14 +72,21 @@ include("db_con.php");
 								<h1>U Lose We Find</h1>
 								<p>A Webservice to help finding your lost valuables.</p>
 							</header>
-							
 							<p>Welcome <?php echo $uname ?> <br />
 							You can modify your userdata using the Form down below. </p>
-							
-						<!--					CONSTRUCTION
-						*******FORMULAR ZUR BEARBEITUNG VON BENUTZERDATEN*******
-												CONSTRUCTION				-->
-							
+							<section>
+								<div class="container">
+									<input type="text" value="<?php echo $bindfirstname; ?>"  name="up_vorname" id="up_vorname" required> <br />
+									<input type="text" value="<?php echo $bindlastname; ?>" name="up_name" id="up_name" required> <br />
+									<input type="text" value="<?php echo $bindun; ?>" name="up_email" id="up_email" onchange="EmailValidator(this.value)" required> <br />
+									<p id="up_validemail" name="up_validemail"></p>
+									<input type="password" placeholder="Altes Passwort" name="up_psw_old" id="su_psw_old"  onchange="" required> <br />
+									<input type="password" placeholder="Neues Passwort" name="up_psw_1" id="up_psw_1" onchange="PwValidator(this.value, up_psw_2.value)" required> <br />
+									<input type="password" placeholder="Neues Passwort bestätigen" name="up_psw_2" id="up_psw_2" onchange="PwValidator(up_psw_1.value, this.value)" required> <br />
+									<p id="su_validpw" name="su_validpw"></p>
+									<input type="submit" name="up_save_settings_btn" value="Speichern" onclick="" >
+								</div>
+							</section>	
 						</div>
 					</div>
 
