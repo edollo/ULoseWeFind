@@ -29,8 +29,14 @@ $query = "SELECT Email, Passwort FROM Person WHERE Email ='".$bindun."'";
 		{	
 			while ($row = $result->fetch_assoc()) {
 
+				//password in hash verwandeln (anhand userid)
+				$pw = hash('sha256', $bindpw . $row["idPerson"]);
+
+				echo $pw;
+
+
 				//überprüfen ob Benutzerdaten korrekt sind
-				if ($bindun == $row["Email"] and $bindpw == $row["Passwort"])  {
+				if ($bindun == $row["Email"] and $pw == $row["Passwort"])  {
 	
 					$_SESSION['uname'] = $bindun;
 					echo "valid";
@@ -147,14 +153,32 @@ if(isset($_POST['su_signup_btn'])) {
 	$bindpw2 = mysqli_real_escape_string($db, $_POST['su_psw_2']);
 	
 	//query's bilen
-	//$query = "SELECT Email FROM Person WHERE Email ='".$bindemail."'";
-	$queryinsert = "INSERT INTO `Person`(`Name`, `Nachname`, `Email`, `Anrede_idAnrede`, `Passwort`) VALUES ('".$bindfirstname."','".$bindlastname."','".$bindemail."',1,'".$bindpw2."')";
+	//für password wird defaultwert gesetzt, falls das setzen des passworts fehlschlägt und der Datensatz nicht entfernt werden kann
+	$queryinsert = "INSERT INTO `Person`(`Name`, `Nachname`, `Email`, `Anrede_idAnrede`, `Passwort`) VALUES ('".$bindfirstname."','".$bindlastname."','".$bindemail."',1,'hashbfbsjdfjsab')";
 		
 	if ($result = $db->query($queryinsert)) {
 	
 		if($db->affected_rows > 0)
 		{
-			echo "success";
+			//generieren des hash passworts
+			$id = mysqli_insert_id($db);
+			$pw = hash('sha256', $bindpw2 . $id);
+			$querysetpw = "UPDATE `Person` SET `Passwort` = '".$pw."' WHERE `idPerson` = ".$id;
+
+			if ($result = $db->query($querysetpw)) {
+				if($db->affected_rows > 0)
+				{
+					echo "success";
+				}
+				else
+				{
+					//datensatz löschen
+
+					echo "fail";
+				
+				}
+			}
+				
 		}
 		else
 		{

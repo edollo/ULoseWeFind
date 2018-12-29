@@ -140,7 +140,12 @@
 						{	
 							document.getElementById("su_form").style.display = 'none';
 							document.getElementById("su_success").style.display = 'block';
-						}						
+						}
+						else
+						{	
+							document.write(this.responseText);
+						}
+
 					}
 				};
 

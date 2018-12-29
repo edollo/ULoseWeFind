@@ -61,7 +61,7 @@ if(isset($_SESSION['uname'])) {
 
 				xmlhttp.open("POST","db_query.php",true);
 				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				xmlhttp.send("ValidateUname=" + uname);
+				xmlhttp.send("ValidateUname=" + true + "&su_email=" + uname);
 			}
 		}
 		
@@ -94,6 +94,10 @@ if(isset($_SESSION['uname'])) {
 						else if (this.responseText == "valid")
 						{
 							window.location = 'loser_page.php';
+						}
+						else
+						{
+							document.write(this.responseText);
 						}
 					}
 				};
