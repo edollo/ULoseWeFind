@@ -83,19 +83,17 @@ if(isset($_POST['ValidateUname'])) {
 		}
 		else
 		{
-			
-			//funktioniert nichr
-			//eigener Name ist ok
-			if($row["Email"] == "edollo" )
+			while ($row = $result->fetch_assoc()) 
 			{
-				
-				
-			}
-			else
-			{
-				
-				echo "exists";
-				
+				//eigener Name ist ok
+				if($row["Email"] == $_SESSION['uname'])
+				{
+					echo "existsnot";	
+				}
+				else
+				{
+					echo "exists";	
+				}
 			}
 		}
 	}	

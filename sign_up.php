@@ -117,13 +117,8 @@
 		
 		function SignUp(su_signup_btn_f, su_vorname_f, su_name_f, su_email_f, su_psw_1_f, su_psw_2_f) {
 		
+			if (su_signup_btn_f == "") {
 			
-			//var test = EmailValidator(su_email_f);
-			var test = "lol";
-		
-			if (test == "exists") {
-			
-				//muss noch definiert werden --> herausfinden wie funktion EmailValidator hier abgespielt werden kann
 				return;
 				
 			} else { 
@@ -143,7 +138,6 @@
 						}
 						else
 						{
-							//document.write("fail");
 							document.write(this.responseText);
 						}
 						

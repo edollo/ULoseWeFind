@@ -111,7 +111,6 @@ include("lib_core.php");
 						{
 							document.getElementById("up_email").style.borderBottom = "solid 1px red";
 							document.getElementById("up_validemail").innerHTML = "Account unter Email-Aresse schon vorhanden";
-							return "exists";
 						}
 						else
 						{
