@@ -97,8 +97,13 @@
 						{
 							document.getElementById("su_email").style.borderBottom = "solid 1px red";
 							document.getElementById("su_validemail").innerHTML = "Account unter Email-Aresse schon vorhanden";
-							return "exists";
 						}
+						else if(this.responseText == "emailincorrect")
+						{
+							document.getElementById("su_email").style.borderBottom = "solid 1px red";
+							document.getElementById("su_validemail").innerHTML = "Email-Aresse ungültig";
+						}
+
 						else
 						{
 							document.getElementById("su_validemail").innerHTML = "";
@@ -110,7 +115,7 @@
 
 				xmlhttp.open("POST","db_query.php",true);
 				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				xmlhttp.send("ValidateUname=" + su_email_f);
+				xmlhttp.send("ValidateUname=" + true + "&su_email=" + su_email_f);
 			}
 		}
 		
@@ -131,16 +136,11 @@
 				}
 				xmlhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
-					
-						if(this.responseText == "success")
-						{
-							document.write("success");
-						}
-						else
-						{
-							document.write(this.responseText);
-						}
-						
+						if(this.responseText == "existsnotmatchingsuccess")
+						{	
+							document.getElementById("su_form").style.display = 'none';
+							document.getElementById("su_success").style.display = 'block';
+						}						
 					}
 				};
 
@@ -192,7 +192,7 @@
                 <p>A Webservice to help finding your lost valuables.</p>
             </header>
            <!-- <form method="POST" action="db_query.php">-->
-                <div class="container">
+                <div class="container" id="su_form">
 					<input type="text" placeholder="Vorname" name="su_vorname" id="su_vorname" required> <br />
 					<input type="text" placeholder="Name" name="su_name" id="su_name" required> <br />
 				    <input type="text" placeholder="E-Mail Adresse" name="su_email" id="su_email" onchange="EmailValidator(this.value)" required> <br />
@@ -201,6 +201,9 @@
                     <input type="password" placeholder="Passwort bestätigen" name="su_psw_2" id="su_psw_2" onchange="PwValidator(su_psw_1.value, this.value)" required> <br />
 					<p id="su_validpw" name="su_validpw"></p>
                     <input type="submit" name="su_signup_btn" value="Sign up!" onclick="SignUp(this.value, su_vorname.value, su_name.value, su_email.value, su_psw_1.value, su_psw_2.value)" >
+                </div>
+				<div class="container" id="su_success" style="display: none;">
+					<h3>Registrierung erfolgreich. Bitte einloggen. <a href="login.php">Login</a> </h3>
                 </div>
            <!-- </form>-->
         </div>

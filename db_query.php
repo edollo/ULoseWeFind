@@ -69,8 +69,15 @@ if(isset($_POST['signup_btn'])) {
 //Überprüfung email
 if(isset($_POST['ValidateUname'])) {
 
+
+	//validieren ob richtige Emailadresse
+	if (!filter_var($_POST['su_email'], FILTER_VALIDATE_EMAIL)) {
+		echo "emailincorrect";
+		return;
+	}
+
 	//Security /Variablenauslesen
-	$bindun = mysqli_real_escape_string($db, $_POST['ValidateUname']);
+	$bindun = mysqli_real_escape_string($db, $_POST['su_email']);
 	
 	$query = "SELECT Email FROM Person WHERE Email ='".$bindun."'";
 
@@ -88,11 +95,14 @@ if(isset($_POST['ValidateUname'])) {
 				//eigener Name ist ok
 				if($row["Email"] == $_SESSION['uname'])
 				{
-					echo "existsnot";	
+					echo "existsnot";
+					$userexists = false;
+
 				}
 				else
 				{
-					echo "exists";	
+					echo "exists";
+					$userexists = true;
 				}
 			}
 		}
@@ -108,16 +118,27 @@ if(isset($_POST['su_psw_2'])) {
 	if ($bindpw1 == $bindpw2) 
 	{
 		echo "matching";
+
+		$pwcorrect = true;
+
 	}
 	else
 	{
-		echo "doesnotmatch";	
+		echo "doesnotmatch";
+		
+		$pwcorrect = false;
 	}
 }
 
 
 //Registrierungs Prozedur
 if(isset($_POST['su_signup_btn'])) {
+
+
+	if (!$pwcorrect || $userexists)
+	{
+		return;
+	}
 
 	//Security /Variablenauslesen
 	$bindemail = mysqli_real_escape_string($db, $_POST['su_email']);
@@ -128,12 +149,8 @@ if(isset($_POST['su_signup_btn'])) {
 	//query's bilen
 	//$query = "SELECT Email FROM Person WHERE Email ='".$bindemail."'";
 	$queryinsert = "INSERT INTO `Person`(`Name`, `Nachname`, `Email`, `Anrede_idAnrede`, `Passwort`) VALUES ('".$bindfirstname."','".$bindlastname."','".$bindemail."',1,'".$bindpw2."')";
-	
-	echo $queryinsert;
-	
+		
 	if ($result = $db->query($queryinsert)) {
-	
-		echo $query;
 	
 		if($db->affected_rows > 0)
 		{
