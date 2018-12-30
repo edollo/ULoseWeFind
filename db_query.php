@@ -20,7 +20,7 @@ if(isset($_POST['login_btn'])) {
 $bindpw = mysqli_real_escape_string($db, $_POST['psw']);
 $bindun = mysqli_real_escape_string($db, $_POST['uname']);
 
-$query = "SELECT Email, Passwort FROM Person WHERE Email ='".$bindun."'";
+$query = "SELECT Email, Passwort, idPerson FROM Person WHERE Email ='".$bindun."'";
 
 	if ($result = $db->query($query)) {
 		
@@ -31,9 +31,6 @@ $query = "SELECT Email, Passwort FROM Person WHERE Email ='".$bindun."'";
 
 				//password in hash verwandeln (anhand userid)
 				$pw = hash('sha256', $bindpw . $row["idPerson"]);
-
-				echo $pw;
-
 
 				//überprüfen ob Benutzerdaten korrekt sind
 				if ($bindun == $row["Email"] and $pw == $row["Passwort"])  {
@@ -63,7 +60,6 @@ $query = "SELECT Email, Passwort FROM Person WHERE Email ='".$bindun."'";
 		}	
 	}
 	$result->free();	
-	
 		
 }
 
@@ -79,7 +75,12 @@ if(isset($_POST['ValidateUname'])) {
 	//validieren ob richtige Emailadresse
 	if (!filter_var($_POST['su_email'], FILTER_VALIDATE_EMAIL)) {
 		echo "emailincorrect";
+		$mailcorrect = false;
 		return;
+	}
+	else
+	{
+		$mailcorrect = true;
 	}
 
 	//Security /Variablenauslesen
@@ -141,7 +142,7 @@ if(isset($_POST['su_psw_2'])) {
 if(isset($_POST['su_signup_btn'])) {
 
 
-	if (!$pwcorrect || $userexists)
+	if (!$pwcorrect || $userexists || !$mailcorrect)
 	{
 		return;
 	}
@@ -154,7 +155,7 @@ if(isset($_POST['su_signup_btn'])) {
 	
 	//query's bilen
 	//für password wird defaultwert gesetzt, falls das setzen des passworts fehlschlägt und der Datensatz nicht entfernt werden kann
-	$queryinsert = "INSERT INTO `Person`(`Name`, `Nachname`, `Email`, `Anrede_idAnrede`, `Passwort`) VALUES ('".$bindfirstname."','".$bindlastname."','".$bindemail."',1,'hashbfbsjdfjsab')";
+	$queryinsert = "INSERT INTO `Person`(`Name`, `Nachname`, `Email`, `Anrede_idAnrede`, `Passwort`) VALUES ('".$bindfirstname."','".$bindlastname."','".$bindemail."',1,'default526607929f8bc596763776ee8204d68b17d105db293c373818d99d1')";
 		
 	if ($result = $db->query($queryinsert)) {
 	
@@ -172,12 +173,19 @@ if(isset($_POST['su_signup_btn'])) {
 				}
 				else
 				{
-					//datensatz löschen
-
-					echo "fail";
-				
+					//datensatz löschen falls password nicht gesetzt werden konnte
+					$deletequery = "DELETE FROM `Person` WHERE idPerson=".$id." LIMIT 1";
+					mysqli_query($db, $deletequery);
 				}
 			}
+			else
+			{
+				//datensatz löschen falls password nicht gesetzt werden konnte
+				$deletequery = "DELETE FROM `Person` WHERE idPerson=".$id." LIMIT 1";
+				mysqli_query($db, $deletequery);
+				echo "fail";
+			}
+
 				
 		}
 		else

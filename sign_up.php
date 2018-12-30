@@ -136,16 +136,22 @@
 				}
 				xmlhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
+						
+						//regex für überprüfung
+						var fail = /fail/;
+
 						if(this.responseText == "existsnotmatchingsuccess")
 						{	
 							document.getElementById("su_form").style.display = 'none';
 							document.getElementById("su_success").style.display = 'block';
 						}
-						else
+						else if (fail.test(this.responseText))
 						{	
-							document.write(this.responseText);
+			
+							document.getElementById("su_form").style.display = 'none';
+							document.getElementById("su_error").style.display = 'block';
+	
 						}
-
 					}
 				};
 
@@ -209,6 +215,9 @@
                 </div>
 				<div class="container" id="su_success" style="display: none;">
 					<h3>Registrierung erfolgreich. Bitte einloggen. <a href="login.php">Login</a> </h3>
+                </div>
+				<div class="container" id="su_error" style="display: none;">
+					<h3 style="color: red; font-weight: bold;">Fehler bei der Registrierung. Bitte versuchen sie es erneuert. <a href="sign_up.php">SignUp</a> </h3>
                 </div>
            <!-- </form>-->
         </div>
