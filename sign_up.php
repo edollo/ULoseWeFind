@@ -122,11 +122,26 @@
 		
 		function SignUp(su_signup_btn_f, su_vorname_f, su_name_f, su_email_f, su_psw_1_f, su_psw_2_f) {
 		
-			if (su_signup_btn_f == "") {
+			if (su_signup_btn_f == "" ||  su_vorname_f == "" || su_name_f == "" ) {
 			
+				if(su_vorname_f == "")
+				{
+					document.getElementById("su_vorname").style.borderBottom = "solid 1px red";
+				}
+
+				if(su_name_f == "")
+				{
+					document.getElementById("su_name").style.borderBottom = "solid 1px red";
+				}
+
 				return;
 				
 			} else { 
+
+				//rot unterstrichende felder für name und vorname entfernen
+				document.getElementById("su_vorname").style.borderBottom = "solid 1px #c9c9c9";
+				document.getElementById("su_name").style.borderBottom = "solid 1px #c9c9c9";
+
 				if (window.XMLHttpRequest) {
 					// code for IE7+, Firefox, Chrome, Opera, Safari
 					xmlhttp = new XMLHttpRequest();
@@ -202,14 +217,14 @@
                 <h1>U Lose We Find</h1>
                 <p>A Webservice to help finding your lost valuables.</p>
             </header>
-           <!-- <form method="POST" action="db_query.php">-->
+           
                 <div class="container" id="su_form">
-					<input type="text" placeholder="Vorname" name="su_vorname" id="su_vorname" required> <br />
-					<input type="text" placeholder="Name" name="su_name" id="su_name" required> <br />
-				    <input type="text" placeholder="E-Mail Adresse" name="su_email" id="su_email" onchange="EmailValidator(this.value)" required> <br />
+					<input type="text" placeholder="Vorname" name="su_vorname" id="su_vorname" > <br />
+					<input type="text" placeholder="Name" name="su_name" id="su_name" > <br />
+				    <input type="text" placeholder="E-Mail Adresse" name="su_email" id="su_email" onchange="EmailValidator(this.value)" > <br />
 					<p id="su_validemail" name="su_validemail"></p>
-                    <input type="password" placeholder="Passwort" name="su_psw_1" id="su_psw_1"  onchange="PwValidator(this.value, su_psw_2.value)" required> <br />
-                    <input type="password" placeholder="Passwort bestätigen" name="su_psw_2" id="su_psw_2" onchange="PwValidator(su_psw_1.value, this.value)" required> <br />
+                    <input type="password" placeholder="Passwort" name="su_psw_1" id="su_psw_1"  onchange="PwValidator(this.value, su_psw_2.value)" > <br />
+                    <input type="password" placeholder="Passwort bestätigen" name="su_psw_2" id="su_psw_2" onchange="PwValidator(su_psw_1.value, this.value)" > <br />
 					<p id="su_validpw" name="su_validpw"></p>
                     <input type="submit" name="su_signup_btn" value="Sign up!" onclick="SignUp(this.value, su_vorname.value, su_name.value, su_email.value, su_psw_1.value, su_psw_2.value)" >
                 </div>
@@ -219,7 +234,7 @@
 				<div class="container" id="su_error" style="display: none;">
 					<h3 style="color: red; font-weight: bold;">Fehler bei der Registrierung. Bitte versuchen sie es erneuert. <a href="sign_up.php">SignUp</a> </h3>
                 </div>
-           <!-- </form>-->
+           
         </div>
     </div>
 
