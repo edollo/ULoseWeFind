@@ -122,7 +122,7 @@
 		
 		function SignUp(su_signup_btn_f, su_vorname_f, su_name_f, su_email_f, su_psw_1_f, su_psw_2_f) {
 		
-			if (su_signup_btn_f == "" ||  su_vorname_f == "" || su_name_f == "" ) {
+			if (su_signup_btn_f == "" ||  su_vorname_f == "" || su_name_f == "" || su_psw_1_f == "" || su_psw_2_f == "") {
 			
 				if(su_vorname_f == "")
 				{
@@ -132,6 +132,12 @@
 				if(su_name_f == "")
 				{
 					document.getElementById("su_name").style.borderBottom = "solid 1px red";
+				}
+				
+				if(su_psw_1_f == "" && su_psw_2_f == "")
+				{
+					document.getElementById("su_psw_1").style.borderBottom = "solid 1px red";
+					document.getElementById("su_psw_2").style.borderBottom = "solid 1px red";
 				}
 
 				return;

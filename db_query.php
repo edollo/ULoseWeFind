@@ -94,6 +94,7 @@ if(isset($_POST['ValidateUname'])) {
 		if (mysqli_num_rows($result) == 0)
 		{
 			echo "existsnot";
+			$userexists = false;
 		}
 		else
 		{
@@ -136,6 +137,45 @@ if(isset($_POST['su_psw_2'])) {
 		$pwcorrect = false;
 	}
 }
+
+if(isset($_POST['up_psw_old'])) {
+
+
+//Security /Variablenauslesen
+$bindpw = mysqli_real_escape_string($db, $_POST['up_psw_old']);
+$bindun = mysqli_real_escape_string($db, $_SESSION['uname']);
+
+$query = "SELECT Email, Passwort, idPerson FROM Person WHERE Email ='".$bindun."'";
+
+	if ($result = $db->query($query)) {
+		
+		//überprüfung benutzer vorhanden
+		if (mysqli_num_rows($result) !== 0)
+		{	
+			while ($row = $result->fetch_assoc()) {
+
+				//password in hash verwandeln (anhand userid)
+				$pw = hash('sha256', $bindpw . $row["idPerson"]);
+
+				//überprüfen ob Benutzerdaten korrekt sind
+				if ($bindun == $row["Email"] and $pw == $row["Passwort"])  {
+	
+					echo "valid";
+					$oldpwcorrect = true;
+					
+				}
+				else {
+					echo "invalidpw";
+					$oldpwcorrect = false;
+	
+				}
+			}
+		}	
+	}
+	$result->free();	
+}
+
+
 
 
 //Registrierungs Prozedur
@@ -196,6 +236,99 @@ if(isset($_POST['su_signup_btn'])) {
 	
 	}	
 }
+
+if(isset($_POST['up_save_settings_btn'])) {
+
+
+	
+	///id holen
+	$bindun = mysqli_real_escape_string($db, $_SESSION['uname']);
+	$query = "SELECT idPerson FROM Person WHERE Email ='".$bindun."'";
+
+	if ($result = $db->query($query)) {
+		
+		//überprüfung querry erfolgreich
+		if (mysqli_num_rows($result) !== 0)
+		{	
+			while ($row = $result->fetch_assoc()) 
+			{
+				$id == $row["idPerson"]
+			}
+		}
+		else 
+		{
+			echo "fail";
+		}
+		
+	}
+	else 
+	{
+		echo "fail";
+	}
+	
+	$result->free();	
+	
+	
+	///werte auslesen
+	$bindemail = mysqli_real_escape_string($db, $_POST['su_email']);
+	$bindfirstname = mysqli_real_escape_string($db, $_POST['up_vorname']);
+	$bindlastname = mysqli_real_escape_string($db, $_POST['up_name']);
+	
+	
+
+
+	//abfrage ob passwort auch gesetzt wird (passwort nicht ändern = neues passwort wird gesetzt)
+	if ($_POST['up_change_pw_btn'] == "Passwort nicht Ändern")
+	{
+		//werte überprüfen
+		if (!$pwcorrect || $userexists || !$mailcorrect || !$oldpwcorrect)
+			{
+				return;
+				//abbruch
+				
+			}
+			else
+			{
+				$bindpw2 = mysqli_real_escape_string($db, $_POST['su_psw_2']);
+				$pw = hash('sha256', $bindpw2 . $id);
+				$querychange = "UPDATE `Person` SET `Passwort` = '".$pw."', `Name` = '".$bindfirstname."', `Nachname` = '".$bindlastname."', `Email` = '".$bindemail."', `Anrede_idAnrede` = 1  WHERE `idPerson` = ".$id;
+			}
+	}
+	else
+	{
+		//wenn passwort nicht geändert wird muss nur email überprüft werden
+			if ($userexists || !$mailcorrect )
+			{
+				return;
+				//abbruch
+			}
+			else
+			{
+				$querychange = "UPDATE `Person` SET `Name` = '".$bindfirstname."', `Nachname` = '".$bindlastname."', `Email` = '".$bindemail."', `Anrede_idAnrede` = 1 WHERE `idPerson` = ".$id;
+			}
+	}
+
+	
+	
+	///daten schreiben
+	
+	if ($result = $db->query($querysetpw)) {
+		if($db->affected_rows > 0)
+		{
+			echo "success";
+		}
+		else
+		{
+			echo "fail";
+		}
+	} 
+
+
+
+	
+}
+
+
 
 
 $db->close();
