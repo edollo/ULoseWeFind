@@ -179,8 +179,8 @@ include("lib_core.php");
 		
 		
 		function SaveSettings(up_vorname_f, up_name_f, up_email_f, up_psw_old_f, up_psw_1_f, up_psw_2_f, up_change_pw_btn_f) {
-			//überprüfen ob Namens felder oder email Leer sind
-			if (document.getElementById("up_vorname").value == "" || document.getElementById("up_name").value == "" || document.getElementById("up_email").value == ""){
+			//überprüfen ob Namens felder email oder password Leer sind
+			if (document.getElementById("up_vorname").value == "" || document.getElementById("up_name").value == "" || document.getElementById("up_email").value == "" || (document.getElementById("up_psw_1").value == "" && document.getElementById("up_psw_2").value == "" && document.getElementById("up_change_pw_btn").value == "Passwort nicht Ändern")){
 				 
 				if (document.getElementById("up_vorname").value == "")
 				{
@@ -210,6 +210,30 @@ include("lib_core.php");
 				{
 					document.getElementById("up_email").style.borderBottom = "solid 1px #c9c9c9";		
 				}
+				
+				
+				
+				if(document.getElementById("up_psw_1").value == "")
+				{
+					document.getElementById("up_psw_1").style.borderBottom = "solid 1px red";
+				}
+				else
+				{
+					document.getElementById("up_psw_1").style.borderBottom = "solid 1px #c9c9c9";		
+				}
+
+				
+				if(document.getElementById("up_psw_2").value == "")
+				{
+					document.getElementById("up_psw_2").style.borderBottom = "solid 1px red";
+				}
+				else
+				{
+					document.getElementById("up_psw_2").style.borderBottom = "solid 1px #c9c9c9";		
+				}
+				
+			
+				
 				
 				return;
 				
@@ -273,7 +297,7 @@ include("lib_core.php");
 						{
 							document.getElementById("up_form").style.display = 'none';
 							document.getElementById("up_error").style.display = 'block';
-						}	
+						}
 					}
 				};
 
@@ -367,7 +391,7 @@ include("lib_core.php");
 									<input type="submit" name="up_save_settings_btn" value="Speichern" onclick="SaveSettings(up_vorname.value, up_name.value, up_email.value, up_psw_old.value,up_psw_1.value, up_psw_2.value, up_change_pw_btn.value)" >
 								</div>
 								<div class="container" id="up_success" style="display: none;">
-									<h3>Änderung erfolgreich. <a href="home.php">Home</a> </h3>
+									<h3>Änderung erfolgreich. <a href="user_page.php">User Page</a> </h3>
 								</div>
 								<div class="container" id="up_error" style="display: none;">
 									<h3 style="color: red; font-weight: bold;">Fehler bei der Änderung. Bitte versuchen sie es erneuert. <a href="user_page.php">User Page</a> </h3>

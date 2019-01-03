@@ -239,8 +239,6 @@ if(isset($_POST['su_signup_btn'])) {
 
 if(isset($_POST['up_save_settings_btn'])) {
 
-
-	
 	///id holen
 	$bindun = mysqli_real_escape_string($db, $_SESSION['uname']);
 	$query = "SELECT idPerson FROM Person WHERE Email ='".$bindun."'";
@@ -252,7 +250,7 @@ if(isset($_POST['up_save_settings_btn'])) {
 		{	
 			while ($row = $result->fetch_assoc()) 
 			{
-				$id == $row["idPerson"]
+				$id = $row["idPerson"];
 			}
 		}
 		else 
@@ -305,26 +303,27 @@ if(isset($_POST['up_save_settings_btn'])) {
 			else
 			{
 				$querychange = "UPDATE `Person` SET `Name` = '".$bindfirstname."', `Nachname` = '".$bindlastname."', `Email` = '".$bindemail."', `Anrede_idAnrede` = 1 WHERE `idPerson` = ".$id;
+
 			}
 	}
 
 	
-	
 	///daten schreiben
 	
-	if ($result = $db->query($querysetpw)) {
+	if ($result = $db->query($querychange)) {
 		if($db->affected_rows > 0)
 		{
 			echo "success";
+			
+			//Neue Mail in SESSION setzen
+			$_SESSION['uname'] = $bindemail;
+			
 		}
 		else
 		{
 			echo "fail";
 		}
-	} 
-
-
-
+	}
 	
 }
 
