@@ -195,7 +195,7 @@ if(isset($_POST['su_signup_btn'])) {
 	
 	//query's bilen
 	//für password wird defaultwert gesetzt, falls das setzen des passworts fehlschlägt und der Datensatz nicht entfernt werden kann
-	$queryinsert = "INSERT INTO `Person`(`Name`, `Nachname`, `Email`, `Anrede_idAnrede`, `Passwort`) VALUES ('".$bindfirstname."','".$bindlastname."','".$bindemail."',1,'default526607929f8bc596763776ee8204d68b17d105db293c373818d99d1')";
+	$queryinsert = "INSERT INTO `Person`(`Name`, `Nachname`, `Email`, `Passwort`) VALUES ('".$bindfirstname."','".$bindlastname."','".$bindemail."','default526607929f8bc596763776ee8204d68b17d105db293c373818d99d1')";
 		
 	if ($result = $db->query($queryinsert)) {
 	
@@ -289,7 +289,7 @@ if(isset($_POST['up_save_settings_btn'])) {
 			{
 				$bindpw2 = mysqli_real_escape_string($db, $_POST['su_psw_2']);
 				$pw = hash('sha256', $bindpw2 . $id);
-				$querychange = "UPDATE `Person` SET `Passwort` = '".$pw."', `Name` = '".$bindfirstname."', `Nachname` = '".$bindlastname."', `Email` = '".$bindemail."', `Anrede_idAnrede` = 1  WHERE `idPerson` = ".$id;
+				$querychange = "UPDATE `Person` SET `Passwort` = '".$pw."', `Name` = '".$bindfirstname."', `Nachname` = '".$bindlastname."', `Email` = '".$bindemail."' WHERE `idPerson` = ".$id;
 			}
 	}
 	else
@@ -302,7 +302,7 @@ if(isset($_POST['up_save_settings_btn'])) {
 			}
 			else
 			{
-				$querychange = "UPDATE `Person` SET `Name` = '".$bindfirstname."', `Nachname` = '".$bindlastname."', `Email` = '".$bindemail."', `Anrede_idAnrede` = 1 WHERE `idPerson` = ".$id;
+				$querychange = "UPDATE `Person` SET `Name` = '".$bindfirstname."', `Nachname` = '".$bindlastname."', `Email` = '".$bindemail."', WHERE `idPerson` = ".$id;
 
 			}
 	}
