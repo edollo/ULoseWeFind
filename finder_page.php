@@ -10,6 +10,7 @@
 
 include("db_con.php");
 include("lib_core.php");
+
 ?>
 <!DOCTYPE HTML>
 
@@ -62,18 +63,62 @@ include("lib_core.php");
 								<p>A Webservice to help finding your lost valuables.</p>
 							</header>
 							
-							<p>Welcome Stranger :) <br />
-							   Found a goodie with a mark on? <br />
-							   Insert the value on the mark into the field below and follow the instructions.</p>
-							   
-							<section>
-								<form method="POST" action="lib_core.php">
-									<div class="container">
-										<input type="text" placeholder="Mark's value" name="mark_inp" id="mark_inp" required > <br />
-										<input type="submit" name="mark_btn" value="Next">
-									</div>
-								</form>
-							</section>
+							<?php
+								
+								
+								echo 1;
+								echo $checker; 
+								echo $lo_name;
+							
+								if (1 == 1){
+										?>
+										<style type="text/css">
+											#hider_2{
+												display:none;
+											}
+											#hider_3{
+												display:none;
+											}
+										</style>
+										<?php
+								}
+							
+							?>
+							
+							<div id="hider">
+								<p> Welcome Stranger :) <br />
+									Found a goodie with a mark on? <br />
+									Insert the value on the mark into the field below.</p>
+										
+								<section>
+									<form method="POST" action="lib_core.php">
+										<div class="container">
+											<input type="text" placeholder="Mark's value" name="mark_inp" id="mark_inp" required > <br />
+											<input type="submit" name="mark_btn" value="Next">
+										</div>
+									</form>
+								</section>
+							</div>
+							
+							<div id="hider_2">
+								<p> The marker you entered is active.<br />
+									Take a Look at the owners Personal data and decide if you want to get in touch.</p>
+							</div>
+							
+							<div id="hider_3">
+								<p> We are sorry.<br />
+									The Marker you entered is not active.<br />
+									Enter again carefully.</p>
+									
+								<section>
+									<form method="POST" action="lib_core.php">
+										<div class="container">
+											<input type="text" placeholder="Mark's value" name="mark_inp" id="mark_inp" required > <br />
+											<input type="submit" name="mark_btn" value="Next">
+										</div>
+									</form>
+								</section>
+							</div>
 							
 						</div>
 					</div>
