@@ -91,7 +91,7 @@ include("lib_core.php");
 									Insert the value on the mark into the field below.</p>
 										
 								<section>
-									<form method="POST" action="lib_core.php">
+									<form method="POST" action="db_query.php">
 										<div class="container">
 											<input type="text" placeholder="Mark's value" name="mark_inp" id="mark_inp" required > <br />
 											<input type="submit" name="mark_btn" value="Next">
