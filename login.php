@@ -149,7 +149,7 @@ if(isset($_SESSION['uname'])) {
 							<section>
 								<!--<form method="POST"> action="CheckCred(uname.value, psw.value)">-->
 									<div class="container">
-									<input type="text" placeholder="Enter Username" name="uname" id="uname" onchange="UserValidator(this.value)" required > <br />
+									<input type="text" placeholder="Enter Email" name="uname" id="uname" onchange="UserValidator(this.value)" required > <br />
 									<p id="Valid" name="Valid"></p>
 									<input type="password" placeholder="Enter Password" name="psw" id="psw" required> <br /><br />
 									<p id="validpw" name="validpw"></p>

@@ -68,6 +68,28 @@ if(isset($_POST['signup_btn'])) {
     header('Refresh: 0 ; url=sign_up.php');
 }
 
+//Überprüfung optionale email
+if(isset($_POST['su_emailopt'])) {
+
+	//wenn sie Leer ist --> In ordunung, nicht gezwungen anzugeben
+	if (($_POST['su_emailopt']) == "")  
+	{
+		$mailoptcorrect = true;
+	}
+	//ansonsten muss sie der mailrichtlinie entsprechen
+	else if (filter_var($_POST['su_emailopt'], FILTER_VALIDATE_EMAIL))  
+	{
+		$mailoptcorrect = true;
+	}
+	else
+	{
+		$mailoptcorrect = false;
+	}
+
+}
+
+
+
 //Überprüfung email
 if(isset($_POST['ValidateUname'])) {
 
@@ -182,20 +204,21 @@ $query = "SELECT Email, Passwort, idPerson FROM Person WHERE Email ='".$bindun."
 if(isset($_POST['su_signup_btn'])) {
 
 
-	if (!$pwcorrect || $userexists || !$mailcorrect)
+	if (!$pwcorrect || $userexists || !$mailcorrect || !$mailoptcorrect)
 	{
 		return;
 	}
 
 	//Security /Variablenauslesen
 	$bindemail = mysqli_real_escape_string($db, $_POST['su_email']);
+	$bindemailopt = mysqli_real_escape_string($db, $_POST['su_emailopt']);
 	$bindfirstname = mysqli_real_escape_string($db, $_POST['su_vorname']);
 	$bindlastname = mysqli_real_escape_string($db, $_POST['su_name']);
 	$bindpw2 = mysqli_real_escape_string($db, $_POST['su_psw_2']);
 	
 	//query's bilen
 	//für password wird defaultwert gesetzt, falls das setzen des passworts fehlschlägt und der Datensatz nicht entfernt werden kann
-	$queryinsert = "INSERT INTO `Person`(`Name`, `Nachname`, `Email`, `Passwort`) VALUES ('".$bindfirstname."','".$bindlastname."','".$bindemail."','default526607929f8bc596763776ee8204d68b17d105db293c373818d99d1')";
+	$queryinsert = "INSERT INTO `Person`(`Name`, `Nachname`, `Email`, `Email_optional`, `Passwort`) VALUES ('".$bindfirstname."','".$bindlastname."','".$bindemail."','".$bindemailopt."','default526607929f8bc596763776ee8204d68b17d105db293c373818d99d1')";
 		
 	if ($result = $db->query($queryinsert)) {
 	
@@ -269,6 +292,7 @@ if(isset($_POST['up_save_settings_btn'])) {
 	
 	///werte auslesen
 	$bindemail = mysqli_real_escape_string($db, $_POST['su_email']);
+	$bindemailopt = mysqli_real_escape_string($db, $_POST['su_emailopt']);
 	$bindfirstname = mysqli_real_escape_string($db, $_POST['up_vorname']);
 	$bindlastname = mysqli_real_escape_string($db, $_POST['up_name']);
 	
@@ -279,7 +303,7 @@ if(isset($_POST['up_save_settings_btn'])) {
 	if ($_POST['up_change_pw_btn'] == "Passwort nicht Ändern")
 	{
 		//werte überprüfen
-		if (!$pwcorrect || $userexists || !$mailcorrect || !$oldpwcorrect)
+		if (!$pwcorrect || $userexists || !$mailcorrect || !$oldpwcorrect || !$mailoptcorrect)
 			{
 				return;
 				//abbruch
@@ -289,20 +313,20 @@ if(isset($_POST['up_save_settings_btn'])) {
 			{
 				$bindpw2 = mysqli_real_escape_string($db, $_POST['su_psw_2']);
 				$pw = hash('sha256', $bindpw2 . $id);
-				$querychange = "UPDATE `Person` SET `Passwort` = '".$pw."', `Name` = '".$bindfirstname."', `Nachname` = '".$bindlastname."', `Email` = '".$bindemail."' WHERE `idPerson` = ".$id;
+				$querychange = "UPDATE `Person` SET `Passwort` = '".$pw."', `Name` = '".$bindfirstname."', `Nachname` = '".$bindlastname."', `Email` = '".$bindemail."', `Email_optional` = '".$bindemailopt."' WHERE `idPerson` = ".$id;
 			}
 	}
 	else
 	{
 		//wenn passwort nicht geändert wird muss nur email überprüft werden
-			if ($userexists || !$mailcorrect )
+			if ($userexists || !$mailcorrect || !$mailoptcorrect)
 			{
 				return;
 				//abbruch
 			}
 			else
 			{
-				$querychange = "UPDATE `Person` SET `Name` = '".$bindfirstname."', `Nachname` = '".$bindlastname."', `Email` = '".$bindemail."', WHERE `idPerson` = ".$id;
+				$querychange = "UPDATE `Person` SET `Name` = '".$bindfirstname."', `Nachname` = '".$bindlastname."', `Email` = '".$bindemail."', `Email_optional` = '".$bindemailopt."' WHERE `idPerson` = ".$id;
 
 			}
 	}

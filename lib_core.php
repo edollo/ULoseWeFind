@@ -148,7 +148,7 @@ function get_user_information($db, $parm)
 	//uname wird aus security gründen hier ausgelesen
 	$bindun = $_SESSION['uname'];
 	
-	$query = "SELECT Email, Name, Nachname FROM Person WHERE Email ='".$bindun."'";
+	$query = "SELECT Email, Email_optional, Name, Nachname FROM Person WHERE Email ='".$bindun."'";
 	$result = mysqli_query($db, $query);
 	
 	// While Schleife zur verarbeitung der ausgelesenen Daten
@@ -157,6 +157,11 @@ function get_user_information($db, $parm)
 		if($parm == "Email")
 		{
 			echo $row["Email"];
+		
+		}
+		else if($parm == "Email_optional")
+		{
+			echo $row["Email_optional"];
 		
 		}
 		else if($parm == "Name")
@@ -168,7 +173,7 @@ function get_user_information($db, $parm)
 		{
 			echo $row["Nachname"];
 		
-		}	
+		}
 	}
 }
 

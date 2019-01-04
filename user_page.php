@@ -178,7 +178,48 @@ include("lib_core.php");
 		}
 		
 		
-		function SaveSettings(up_vorname_f, up_name_f, up_email_f, up_psw_old_f, up_psw_1_f, up_psw_2_f, up_change_pw_btn_f) {
+		function EmailValidatorOpt(up_emailopt_f) {
+		
+		if (document.getElementById("up_emailopt").value == "") {
+		
+			document.getElementById("up_validemailopt").innerHTML = "";
+			document.getElementById("up_emailopt").style.borderBottom = "solid 1px #c9c9c9";
+			return;
+			
+		} else { 
+			if (window.XMLHttpRequest) {
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();
+			} else {
+				// code for IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+				
+					if(this.responseText == "emailincorrect")
+					{
+						document.getElementById("up_emailopt").style.borderBottom = "solid 1px red";
+						document.getElementById("up_validemailopt").innerHTML = "Email-Aresse ungültig";
+					}
+
+					else
+					{
+						document.getElementById("up_validemailopt").innerHTML = "";
+						document.getElementById("up_emailopt").style.borderBottom = "solid 1px #c9c9c9";
+					}
+					
+				}
+			};
+
+			xmlhttp.open("POST","db_query.php",true);
+			xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xmlhttp.send("ValidateUname=" + true + "&su_email=" + up_emailopt_f);
+		}
+	}
+
+
+		function SaveSettings(up_vorname_f, up_name_f, up_email_f, up_emailopt_f, up_psw_old_f, up_psw_1_f, up_psw_2_f, up_change_pw_btn_f) {
 			//überprüfen ob Namens felder email oder password Leer sind
 			if (document.getElementById("up_vorname").value == "" || document.getElementById("up_name").value == "" || document.getElementById("up_email").value == "" || (document.getElementById("up_psw_1").value == "" && document.getElementById("up_psw_2").value == "" && document.getElementById("up_change_pw_btn").value == "Passwort nicht Ändern")){
 				 
@@ -303,7 +344,7 @@ include("lib_core.php");
 
 				xmlhttp.open("POST","db_query.php",true);
 				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				xmlhttp.send("up_save_settings_btn=" + true + "&ValidateUname=" + true + "&up_change_pw_btn=" + up_change_pw_btn_f + "&up_vorname=" + up_vorname_f + "&up_name=" + up_name_f + "&su_email=" + up_email_f + "&up_psw_old=" + up_psw_old_f + "&su_psw_1=" + up_psw_1_f + "&su_psw_2=" + up_psw_2_f);
+				xmlhttp.send("up_save_settings_btn=" + true + "&ValidateUname=" + true + "&up_change_pw_btn=" + up_change_pw_btn_f + "&up_vorname=" + up_vorname_f + "&up_name=" + up_name_f + "&su_email=" + up_email_f + "&su_emailopt=" + up_emailopt_f + "&up_psw_old=" + up_psw_old_f + "&su_psw_1=" + up_psw_1_f + "&su_psw_2=" + up_psw_2_f);
 			}
 		}
 		
@@ -380,6 +421,8 @@ include("lib_core.php");
 									<input type="text" placeholder="Name" value="<?php get_user_information($db, "Nachname"); ?>" name="up_name" id="up_name" required> <br />
 									<input type="text" placeholder="E-Mail Adresse" value="<?php get_user_information($db, "Email"); ?>" name="up_email" id="up_email" onchange="EmailValidator(this.value)" required> <br />
 									<p id="up_validemail" name="up_validemail"></p>
+									<input type="text" placeholder="Optionale E-Mail Adresse" value="<?php get_user_information($db, "Email_optional"); ?>" name="up_emailopt" id="up_emailopt" onchange="EmailValidatorOpt(this.value)" required> <br />
+									<p id="up_validemailopt" name="up_validemailopt"></p>
 									<input type="submit" name="up_change_pw_btn" id="up_change_pw_btn" value="Passwort Ändern" onclick="ShowPassForm()" ><br><br>
 									<div id="up_pw_form" style="display: none;">
 										<input type="password" placeholder="Altes Passwort" name="up_psw_old" id="up_psw_old" onchange="OldPwValidator(up_psw_old.value)" required> <br />
@@ -388,7 +431,7 @@ include("lib_core.php");
 										<input type="password" placeholder="Neues Passwort bestätigen" name="up_psw_2" id="up_psw_2" onchange="PwValidator(up_psw_1.value, this.value)" required> <br />
 										<p id="up_validpw" name="up_validpw"></p>
 									</div>
-									<input type="submit" name="up_save_settings_btn" value="Speichern" onclick="SaveSettings(up_vorname.value, up_name.value, up_email.value, up_psw_old.value,up_psw_1.value, up_psw_2.value, up_change_pw_btn.value)" >
+									<input type="submit" name="up_save_settings_btn" value="Speichern" onclick="SaveSettings(up_vorname.value, up_name.value, up_email.value, up_emailopt.value, up_psw_old.value,up_psw_1.value, up_psw_2.value, up_change_pw_btn.value)" >
 								</div>
 								<div class="container" id="up_success" style="display: none;">
 									<h3>Änderung erfolgreich. <a href="user_page.php">User Page</a> </h3>

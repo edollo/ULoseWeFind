@@ -118,11 +118,53 @@
 				xmlhttp.send("ValidateUname=" + true + "&su_email=" + su_email_f);
 			}
 		}
+
+
+		function EmailValidatorOpt(su_emailopt_f) {
+		
+		if (document.getElementById("su_emailopt").value == "") {
+		
+			document.getElementById("su_validemailopt").innerHTML = "";
+			document.getElementById("su_emailopt").style.borderBottom = "solid 1px #c9c9c9";
+			return;
+			
+		} else { 
+			if (window.XMLHttpRequest) {
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp = new XMLHttpRequest();
+			} else {
+				// code for IE6, IE5
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+				
+					if(this.responseText == "emailincorrect")
+					{
+						document.getElementById("su_emailopt").style.borderBottom = "solid 1px red";
+						document.getElementById("su_validemailopt").innerHTML = "Email-Aresse ungültig";
+					}
+
+					else
+					{
+						document.getElementById("su_validemailopt").innerHTML = "";
+						document.getElementById("su_emailopt").style.borderBottom = "solid 1px #c9c9c9";
+					}
+					
+				}
+			};
+
+			xmlhttp.open("POST","db_query.php",true);
+			xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xmlhttp.send("ValidateUname=" + true + "&su_email=" + su_emailopt_f);
+		}
+	}
+
 		
 		
-		function SignUp(su_signup_btn_f, su_vorname_f, su_name_f, su_email_f, su_psw_1_f, su_psw_2_f) {
+		function SignUp(su_signup_btn_f, su_vorname_f, su_name_f, su_email_f, su_emailopt_f, su_psw_1_f, su_psw_2_f) {
 		
-			if (su_signup_btn_f == "" ||  su_vorname_f == "" || su_name_f == "" || su_psw_1_f == "" || su_psw_2_f == "") {
+			if (su_signup_btn_f == "" ||  su_vorname_f == "" || su_name_f == "" || su_psw_1_f == "" || su_psw_2_f == "" || su_email_f == "") {
 			
 				if(su_vorname_f == "")
 				{
@@ -140,6 +182,11 @@
 					document.getElementById("su_psw_2").style.borderBottom = "solid 1px red";
 				}
 
+				if(su_email_f == "")
+				{
+					document.getElementById("su_email").style.borderBottom = "solid 1px red";
+				}
+
 				return;
 				
 			} else { 
@@ -147,6 +194,8 @@
 				//rot unterstrichende felder für name und vorname entfernen
 				document.getElementById("su_vorname").style.borderBottom = "solid 1px #c9c9c9";
 				document.getElementById("su_name").style.borderBottom = "solid 1px #c9c9c9";
+				document.getElementById("su_psw_1").style.borderBottom = "solid 1px #c9c9c9";
+				document.getElementById("su_psw_2").style.borderBottom = "solid 1px #c9c9c9";
 
 				if (window.XMLHttpRequest) {
 					// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -178,7 +227,7 @@
 
 				xmlhttp.open("POST","db_query.php",true);
 				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				xmlhttp.send("su_signup_btn=" + su_signup_btn_f + "&ValidateUname=" + true + "&su_vorname=" + su_vorname_f + "&su_name=" + su_name_f + "&su_email=" + su_email_f + "&su_psw_1=" + su_psw_1_f + "&su_psw_2=" + su_psw_2_f );
+				xmlhttp.send("su_signup_btn=" + su_signup_btn_f + "&ValidateUname=" + true + "&su_vorname=" + su_vorname_f + "&su_name=" + su_name_f + "&su_email=" + su_email_f + "&su_emailopt=" + su_emailopt_f +"&su_psw_1=" + su_psw_1_f + "&su_psw_2=" + su_psw_2_f );
 			}
 		}
 	</script>
@@ -229,10 +278,12 @@
 					<input type="text" placeholder="Name" name="su_name" id="su_name" > <br />
 				    <input type="text" placeholder="E-Mail Adresse" name="su_email" id="su_email" onchange="EmailValidator(this.value)" > <br />
 					<p id="su_validemail" name="su_validemail"></p>
+					<input type="text" placeholder="Optionale E-Mail Adresse" name="su_emailopt" id="su_emailopt" onchange="EmailValidatorOpt(this.value)" > <br />
+					<p id="su_validemailopt" name="su_validemailopt"></p>
                     <input type="password" placeholder="Passwort" name="su_psw_1" id="su_psw_1"  onchange="PwValidator(this.value, su_psw_2.value)" > <br />
                     <input type="password" placeholder="Passwort bestätigen" name="su_psw_2" id="su_psw_2" onchange="PwValidator(su_psw_1.value, this.value)" > <br />
 					<p id="su_validpw" name="su_validpw"></p>
-                    <input type="submit" name="su_signup_btn" value="Sign up!" onclick="SignUp(this.value, su_vorname.value, su_name.value, su_email.value, su_psw_1.value, su_psw_2.value)" >
+                    <input type="submit" name="su_signup_btn" value="Sign up!" onclick="SignUp(this.value, su_vorname.value, su_name.value, su_email.value, su_emailopt.value, su_psw_1.value, su_psw_2.value)" >
                 </div>
 				<div class="container" id="su_success" style="display: none;">
 					<h3>Registrierung erfolgreich. Bitte einloggen. <a href="login.php">Login</a> </h3>
