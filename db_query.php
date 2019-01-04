@@ -351,46 +351,44 @@ if(isset($_POST['up_save_settings_btn'])) {
 	
 }
 
-
-
-
-if(isset($_POST['mark_btn'])) {
+if(isset($_POST['fp_mark'])) {
 	
 
-		$query = "SELECT idMarker FROM Gegenstand WHERE idMarker ='".$mark_uinp."'";
+		$query = "SELECT idMarker FROM Gegenstand WHERE idMarker ='".$_POST['fp_mark']."'";
 		$result = mysqli_query($db, $query);
 		
 			if ((mysqli_num_rows($result) !== 0)){
 
-				$query_p = "SELECT Person_idPerson FROM Gegenstand WHERE idMarker = '".$mark_uinp."' LIMIT 1";
-				$result_p = mysqli_query($db, $query_p);
+				$markid = mysqli_real_escape_string($db, $_POST['fp_mark']);
+				$query = "SELECT Email, Email_optional FROM Person WHERE idPerson = (SELECT Person_idPerson FROM Gegenstand WHERE idMarker = '".$markid."' LIMIT 1) LIMIT 1";
+				$result = mysqli_query($db, $query);
+				
+				// While Schleife zur verarbeitung der ausgelesenen Daten
+				while($row = mysqli_fetch_array($result))
+				{
 
+					$markerinfo = [
+							"success",
+							$row["Email"],
+							$row["Email_optional"],
+							
+					]; 
 
-					while($row = mysqli_fetch_array($result_p)){
-						
-						$person_id = $row[0];
+				
+				}
 
-						$query_pers = "SELECT Name, Nachname, Email FROM Person WHERE idPerson = '".$person_id."' LIMIT 1";
-						$result_pers = mysqli_query($db, $query_pers);
-
-							while($row = mysqli_fetch_array($result_pers)){
-
-								$lo_name = $row[0];
-								$lo_nname = $row[1];
-								$lo_email = $row[2];
-								
-								$check = 1;
-								return $check;
-							}
-					}
 			}
 			else {
-				$check = 2;
-				return $check;
-			}
 
-	header('Refresh: 0 ; url=finder_page.php');		
+				$markerinfo = [
+					"error"	,
+				]; 
+			
+			}
 	
+
+	echo json_encode($markerinfo);		
+	//print_r($markerinfo);		
 }
 
 

@@ -13,7 +13,7 @@ $uname = $_SESSION['uname'];
 
 include("db_con.php");
 
-$mark_uinp = mysqli_real_escape_string($db, $_POST['mark_inp']);
+
 
 
 //Erstellen der Funktion Show Objects zum auslesen und anzeigen von Objekten
@@ -178,53 +178,6 @@ function get_user_information($db, $parm)
 		}
 	}
 }
-
-
-if(isset($_POST['mark_btn'])) {
-	
-	function compare_marker ($db, $mark_uinp)
-	{
-
-		$query = "SELECT idMarker FROM Gegenstand WHERE idMarker ='".$mark_uinp."'";
-		$result = mysqli_query($db, $query);
-		
-			if ((mysqli_num_rows($result) !== 0)){
-
-				$query_p = "SELECT Person_idPerson FROM Gegenstand WHERE idMarker = '".$mark_uinp."' LIMIT 1";
-				$result_p = mysqli_query($db, $query_p);
-
-
-					while($row = mysqli_fetch_array($result_p)){
-						
-						$person_id = $row[0];
-
-						$query_pers = "SELECT Name, Nachname, Email FROM Person WHERE idPerson = '".$person_id."' LIMIT 1";
-						$result_pers = mysqli_query($db, $query_pers);
-
-							while($row = mysqli_fetch_array($result_pers)){
-
-								$lo_name = $row[0];
-								$lo_nname = $row[1];
-								$lo_email = $row[2];
-								
-								$check = 1;
-								return $check;
-							}
-					}
-			}
-			else {
-				$check = 2;
-				return $check;
-			}
-
-	header('Refresh: 0 ; url=finder_page.php');		
-		
-	}
-	
-	add_objects($mark_uinp, $db);
-}
-
-
 
 // Abfragen zur Sicherstellung das die richtige Funktion ausgeführt wird
 if(isset($_POST['conf_add_button'])) {

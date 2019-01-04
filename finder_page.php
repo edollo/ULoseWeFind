@@ -21,6 +21,66 @@ include("lib_core.php");
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script>
+		function MarkerValidator(fp_mark_f) {
+
+				if (document.getElementById("fp_mark").value == "") {
+
+					document.getElementById("fp_mark").style.borderBottom = "solid 1px red";
+					return;					
+				} 
+				else { 
+					if (window.XMLHttpRequest) {
+						// code for IE7+, Firefox, Chrome, Opera, Safari
+						xmlhttp = new XMLHttpRequest();
+					} else {
+						// code for IE6, IE5
+						xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+					}
+					xmlhttp.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {
+						
+							var markerinfos = JSON.parse(this.responseText);
+							
+							if(markerinfos[0] == "success")
+							{
+
+								//marker form mit infos einblenden
+								var markersuccess = document.getElementById("marker_success");
+								markersuccess.style.display = "block";
+
+								//form ausblenden
+								var markerform = document.getElementById("marker_form");
+								markerform.style.display = "none";
+
+
+								//werte abfüllen
+								var fp_mail = document.getElementById("fp_mail");
+								var fp_mailopt = document.getElementById("fp_mailopt");
+
+								fp_mail.value = markerinfos[1];
+								fp_mailopt.value = markerinfos[2];
+							}
+							else
+							{
+								//error form einblenden
+								var markersuccess = document.getElementById("marker_error");
+								markersuccess.style.display = "block";
+							
+								//form ausblenden
+								var markerform = document.getElementById("marker_form");
+								markerform.style.display = "none";
+								
+							}
+						}
+					};
+
+					xmlhttp.open("POST","db_query.php",true);
+					xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+					xmlhttp.send("fp_mark=" + fp_mark_f);
+				}
+			}
+		</script>
 	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
@@ -61,63 +121,33 @@ include("lib_core.php");
 							<header>
 								<h1>U Lose We Find</h1>
 								<p>A Webservice to help finding your lost valuables.</p>
-							</header>
-							
-							<?php
-								
-								
-								echo 1;
-								echo $checker; 
-								echo $lo_name;
-							
-								if (1 == 1){
-										?>
-										<style type="text/css">
-											#hider_2{
-												display:none;
-											}
-											#hider_3{
-												display:none;
-											}
-										</style>
-										<?php
-								}
-							
-							?>
-							
-							<div id="hider">
+							</header>							
+							<div id="marker_form">
 								<p> Welcome Stranger :) <br />
 									Found a goodie with a mark on? <br />
 									Insert the value on the mark into the field below.</p>
 										
 								<section>
-									<form method="POST" action="db_query.php">
 										<div class="container">
-											<input type="text" placeholder="Mark's value" name="mark_inp" id="mark_inp" required > <br />
-											<input type="submit" name="mark_btn" value="Next">
+											<input type="text" placeholder="Mark's value" name="fp_mark" id="fp_mark" required > <br />
+											<input type="submit" name="mark_btn" value="Next" onclick="MarkerValidator(fp_mark.value)">
 										</div>
-									</form>
 								</section>
 							</div>
 							
-							<div id="hider_2">
+							<div id="marker_success" style="display: none;">
 								<p> The marker you entered is active.<br />
 									Take a Look at the owners Personal data and decide if you want to get in touch.</p>
+									<input type="text" id="fp_mail" disabled > <br />
+									<input type="text" id="fp_mailopt" disabled > <br />
+									<h3>Andere Marker suchen? <a href="finder_page.php">Finder Page</a> </h3>	
 							</div>
 							
-							<div id="hider_3">
+							<div id="marker_error" style="display: none;">
 								<p> We are sorry.<br />
 									The Marker you entered is not active.<br />
 									Enter again carefully.</p>
-									
-								<section>
-									<form method="POST" action="lib_core.php">
-										<div class="container">
-											<input type="text" placeholder="Mark's value" name="mark_inp" id="mark_inp" required > <br />
-											<input type="submit" name="mark_btn" value="Next">
-										</div>
-									</form>
-								</section>
+								<h3>Andere Marker suchen? <a href="finder_page.php">Finder Page</a> </h3>
 							</div>
 							
 						</div>
