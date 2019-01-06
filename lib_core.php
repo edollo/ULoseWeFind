@@ -35,16 +35,16 @@ function show_objects($username, $db) {
 			// Datenbankabfrage zur Ausgabe der richtigen Objekten
 			$query_so = "SELECT Name, Beschreibung, FotoPfad FROM Gegenstand WHERE Person_idPerson = '".$p_id."' ORDER BY Name ASC";
 			$result_so = mysqli_query($db, $query_so);
-			
+
 				// While Schleife zur Verarbeitung der ausgelesenen Dateien
 				while($row = mysqli_fetch_array($result_so))
 				{
-					
+
 					// Speicherung der Werte in Variablen
 					$obj_name = $row[0];
 					$obj_descript = $row[1];
 					$obj_img_path = $row[2];
-					
+
 					echo "
 						<section class=\"tiles\">
 							<article class=\"style1\">
@@ -59,7 +59,7 @@ function show_objects($username, $db) {
 								</a>
 							</article>
 						</section>";
-					
+
 				}
 	}
 }
@@ -69,16 +69,16 @@ function show_objects($username, $db) {
 function add_objects($username, $db) {
     $currentDir = getcwd();
     $uploadDirectory = "/img/";
-	
+
 	//security
 	$username = mysqli_real_escape_string($db, $username);
-	
+
 
 	// Erstellen von Array zur Speicherung von Fehlermeldung
-    $errors = []; 
+    $errors = [];
 
 	// Alle zugelassenen File Extensions in Array hinterlegen
-    $fileExtensions = ['jpeg','jpg','png']; 
+    $fileExtensions = ['jpeg','jpg','png'];
 
 	// Variablen werden deklariert
     $fileName = $_FILES['obj_img']['name'];
@@ -88,10 +88,10 @@ function add_objects($username, $db) {
     $fileExtension = strtolower(end(explode('.',$fileName)));
 
 	// Der Absolute Pfad wird in die Variable uploadPath geschrieben
-    $uploadPath = $currentDir . $uploadDirectory . basename($fileName); 
+    $uploadPath = $currentDir . $uploadDirectory . basename($fileName);
 	// Der verkürzte Pfad, bestehend aus Bildname und dem Ordner /img wird in die uploadImg Variable geschrieben
 	$uploadImg = "img/". basename($fileName);
-	
+
 		// Überprüfung ob Dateiendung zugelassen ist
         if (! in_array($fileExtension,$fileExtensions)) {
             $errors[] = "Diese Datei ist nicht erlaubt. Bitte wählen sie eine .JPG oder eine .PNG Datei";
@@ -101,39 +101,40 @@ function add_objects($username, $db) {
         if ($fileSize > 2000000) {
             $errors[] = "Die Datei ist zu gross.";
         }
-	
+
 		// Falls sich nichts im Array Erros befindet, wird das Bild hochgeladen. Ansonsten wird der genaue Fehler ausgegeben
         if (empty($errors)) {
             $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
 
             if ($didUpload) {
-                
+
 					$obj_name = htmlentities($_POST['obj_name']);
 					$obj_descript = htmlentities($_POST['obj_desc']);
+					$obj_flohn = htmlentities($_POST['obj_flohn']);
 					$obj_img_path = htmlentities ($uploadImg);
-					
+
 						// Datenbankabfrage zur genauen Identifizierung des Benutzers
 						$query = "SELECT idPerson FROM Person WHERE Email = '".$username."' LIMIT 1";
 						$result = mysqli_query($db, $query);
-						
+
 						// While Schleife zur verarbeitung der ausgelesenen Daten
 						while($row = mysqli_fetch_array($result))
 						{
 							// ID des momentan eingeloggten Benutzers
 							$p_id = $row[0];
-						
+
 							// Upload Query
-							$query = "INSERT INTO Gegenstand (Name, Beschreibung, Person_idPerson, FotoPfad) VALUES ('$obj_name','$obj_descript','$p_id','$obj_img_path')";
+							$query = "INSERT INTO Gegenstand (Name, Beschreibung, Person_idPerson, FotoPfad, Finderlohn) VALUES ('$obj_name','$obj_descript','$p_id','$obj_img_path','$obj_flohn')";
 
 							  if ( !(mysqli_query($db, $query)) ) {
 								  die('<p>Fehler bei der Datenübergabe in die Datenbank</p></body></html>');
-							   } 
+							   }
 							   else {
 								   // Weiterleitung auf die Seite "loser_page.php", falls Upload erfolgreich
 								  header('Refresh: 0 ; url=loser_page.php');
 							   }
-						}	   
-							   
+						}
+
 				} else {
 					echo "Ein Fehler liegt vor, bitte kontaktieren Sie den Systemadministrator";
 				}
@@ -145,36 +146,41 @@ function add_objects($username, $db) {
 }
 
 
-function get_user_information($db, $parm) 
+function get_user_information($db, $parm)
 {
 	//uname wird aus security gründen hier ausgelesen
 	$bindun = $_SESSION['uname'];
-	
+
 	$query = "SELECT Email, Email_optional, Name, Nachname FROM Person WHERE Email ='".$bindun."'";
 	$result = mysqli_query($db, $query);
-	
+
 	// While Schleife zur verarbeitung der ausgelesenen Daten
 	while($row = mysqli_fetch_array($result))
 	{
 		if($parm == "Email")
 		{
 			echo $row["Email"];
-		
+
 		}
 		else if($parm == "Email_optional")
 		{
 			echo $row["Email_optional"];
-		
+
+		}
+		else if($parm == "Finderlohn")
+		{
+			echo $row["Finderlohn"];
+
 		}
 		else if($parm == "Name")
 		{
 			echo $row["Name"];
-		
+
 		}
 		else if($parm == "Nachname")
 		{
 			echo $row["Nachname"];
-		
+
 		}
 	}
 }

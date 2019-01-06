@@ -1,4 +1,4 @@
-<?php 
+<?php
 ####################################################
 #+------------------------------------------------+#
 #|Project:       ULWF                             |#
@@ -27,9 +27,9 @@ include("lib_core.php");
 				if (document.getElementById("fp_mark").value == "") {
 
 					document.getElementById("fp_mark").style.borderBottom = "solid 1px red";
-					return;					
-				} 
-				else { 
+					return;
+				}
+				else {
 					if (window.XMLHttpRequest) {
 						// code for IE7+, Firefox, Chrome, Opera, Safari
 						xmlhttp = new XMLHttpRequest();
@@ -39,9 +39,9 @@ include("lib_core.php");
 					}
 					xmlhttp.onreadystatechange = function() {
 						if (this.readyState == 4 && this.status == 200) {
-						
+
 							var markerinfos = JSON.parse(this.responseText);
-							
+
 							if(markerinfos[0] == "success")
 							{
 
@@ -57,20 +57,22 @@ include("lib_core.php");
 								//werte abfüllen
 								var fp_mail = document.getElementById("fp_mail");
 								var fp_mailopt = document.getElementById("fp_mailopt");
+								var fp_flohn = document.getElementById("fp_flohn");
 
 								fp_mail.value = markerinfos[1];
 								fp_mailopt.value = markerinfos[2];
+								fp_flohn.value = markerinfos[4];
 							}
 							else
 							{
 								//error form einblenden
 								var markersuccess = document.getElementById("marker_error");
 								markersuccess.style.display = "block";
-							
+
 								//form ausblenden
 								var markerform = document.getElementById("marker_form");
 								markerform.style.display = "none";
-								
+
 							}
 						}
 					};
@@ -121,12 +123,12 @@ include("lib_core.php");
 							<header>
 								<h1>U Lose We Find</h1>
 								<p>A Webservice to help finding your lost valuables.</p>
-							</header>							
+							</header>
 							<div id="marker_form">
 								<p> Welcome Stranger :) <br />
 									Found a goodie with a mark on? <br />
 									Insert the value on the mark into the field below.</p>
-										
+
 								<section>
 										<div class="container">
 											<input type="text" placeholder="Mark's value" name="fp_mark" id="fp_mark" required > <br />
@@ -134,22 +136,23 @@ include("lib_core.php");
 										</div>
 								</section>
 							</div>
-							
+
 							<div id="marker_success" style="display: none;">
 								<p> The marker you entered is active.<br />
 									Take a Look at the owners Personal data and decide if you want to get in touch.</p>
 									<input type="text" id="fp_mail" disabled > <br />
 									<input type="text" id="fp_mailopt" disabled > <br />
-									<h3>Andere Marker suchen? <a href="finder_page.php">Finder Page</a> </h3>	
+									<input type="text" id="fp_flohn" disabled > <br />
+									<h3>Try other Marker?  <a href="finder_page.php">Finder Page</a> </h3>
 							</div>
-							
+
 							<div id="marker_error" style="display: none;">
 								<p> We are sorry.<br />
 									The Marker you entered is not active.<br />
 									Enter again carefully.</p>
-								<h3>Andere Marker suchen? <a href="finder_page.php">Finder Page</a> </h3>
+								<h3>Try other Marker? <a href="finder_page.php">Finder Page</a> </h3>
 							</div>
-							
+
 						</div>
 					</div>
 

@@ -1,4 +1,4 @@
-﻿<?php 
+﻿<?php
 ####################################################
 #+------------------------------------------------+#
 #|Project:       ULWF                             |#
@@ -21,28 +21,28 @@
 	function PwValidator(su_psw_1_f, su_psw_2_f) {
 
 			if (document.getElementById("su_psw_1").value == "" && document.getElementById("su_psw_2").value == "") {
-			
+
 				document.getElementById("su_validpw").innerHTML = "";
 				document.getElementById("su_psw_1").style.borderBottom = "solid 1px #c9c9c9";
 				document.getElementById("su_psw_2").style.borderBottom = "solid 1px #c9c9c9";
 				return;
-				
-			} 
-		
+
+			}
+
 			else if (document.getElementById("su_psw_2").value == "") {
-			
+
 				document.getElementById("su_validpw").innerHTML = "";
 				document.getElementById("su_psw_2").style.borderBottom = "solid 1px #c9c9c9";
 				return;
-				
-			} 
+
+			}
 			else if (document.getElementById("su_psw_1").value == "" && document.getElementById("su_psw_2").value !== "")
 			{
 				document.getElementById("su_psw_1").style.borderBottom = "solid 1px red";
 				return;
 			}
-			
-			else { 
+
+			else {
 				if (window.XMLHttpRequest) {
 					// code for IE7+, Firefox, Chrome, Opera, Safari
 					xmlhttp = new XMLHttpRequest();
@@ -52,7 +52,7 @@
 				}
 				xmlhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
-					
+
 						if(this.responseText == "doesnotmatch")
 						{
 							document.getElementById("su_psw_1").style.borderBottom = "solid 1px #c9c9c9";
@@ -73,16 +73,16 @@
 				xmlhttp.send("su_psw_1=" + su_psw_1_f + "&su_psw_2=" + su_psw_2_f);
 			}
 		}
-		
+
 		function EmailValidator(su_email_f) {
-		
+
 			if (document.getElementById("su_email").value == "") {
-			
+
 				document.getElementById("su_validemail").innerHTML = "";
 				document.getElementById("su_email").style.borderBottom = "solid 1px #c9c9c9";
 				return;
-				
-			} else { 
+
+			} else {
 				if (window.XMLHttpRequest) {
 					// code for IE7+, Firefox, Chrome, Opera, Safari
 					xmlhttp = new XMLHttpRequest();
@@ -92,7 +92,7 @@
 				}
 				xmlhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
-					
+
 						if(this.responseText == "exists")
 						{
 							document.getElementById("su_email").style.borderBottom = "solid 1px red";
@@ -109,7 +109,7 @@
 							document.getElementById("su_validemail").innerHTML = "";
 							document.getElementById("su_email").style.borderBottom = "solid 1px #c9c9c9";
 						}
-						
+
 					}
 				};
 
@@ -121,14 +121,14 @@
 
 
 		function EmailValidatorOpt(su_emailopt_f) {
-		
+
 		if (document.getElementById("su_emailopt").value == "") {
-		
+
 			document.getElementById("su_validemailopt").innerHTML = "";
 			document.getElementById("su_emailopt").style.borderBottom = "solid 1px #c9c9c9";
 			return;
-			
-		} else { 
+
+		} else {
 			if (window.XMLHttpRequest) {
 				// code for IE7+, Firefox, Chrome, Opera, Safari
 				xmlhttp = new XMLHttpRequest();
@@ -138,7 +138,7 @@
 			}
 			xmlhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
-				
+
 					if(this.responseText == "emailincorrect")
 					{
 						document.getElementById("su_emailopt").style.borderBottom = "solid 1px red";
@@ -150,7 +150,7 @@
 						document.getElementById("su_validemailopt").innerHTML = "";
 						document.getElementById("su_emailopt").style.borderBottom = "solid 1px #c9c9c9";
 					}
-					
+
 				}
 			};
 
@@ -160,12 +160,12 @@
 		}
 	}
 
-		
-		
+
+
 		function SignUp(su_signup_btn_f, su_vorname_f, su_name_f, su_email_f, su_emailopt_f, su_psw_1_f, su_psw_2_f) {
-		
+
 			if (su_signup_btn_f == "" ||  su_vorname_f == "" || su_name_f == "" || su_psw_1_f == "" || su_psw_2_f == "" || su_email_f == "") {
-			
+
 				if(su_vorname_f == "")
 				{
 					document.getElementById("su_vorname").style.borderBottom = "solid 1px red";
@@ -175,7 +175,7 @@
 				{
 					document.getElementById("su_name").style.borderBottom = "solid 1px red";
 				}
-				
+
 				if(su_psw_1_f == "" && su_psw_2_f == "")
 				{
 					document.getElementById("su_psw_1").style.borderBottom = "solid 1px red";
@@ -188,8 +188,8 @@
 				}
 
 				return;
-				
-			} else { 
+
+			} else {
 
 				//rot unterstrichende felder für name und vorname entfernen
 				document.getElementById("su_vorname").style.borderBottom = "solid 1px #c9c9c9";
@@ -206,21 +206,21 @@
 				}
 				xmlhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
-						
+
 						//regex für überprüfung
 						var fail = /fail/;
 
 						if(this.responseText == "existsnotmatchingsuccess")
-						{	
+						{
 							document.getElementById("su_form").style.display = 'none';
 							document.getElementById("su_success").style.display = 'block';
 						}
 						else if (fail.test(this.responseText))
-						{	
-			
+						{
+
 							document.getElementById("su_form").style.display = 'none';
 							document.getElementById("su_error").style.display = 'block';
-	
+
 						}
 					}
 				};
@@ -272,26 +272,26 @@
                 <h1>U Lose We Find</h1>
                 <p>A Webservice to help finding your lost valuables.</p>
             </header>
-           
+
                 <div class="container" id="su_form">
-					<input type="text" placeholder="Vorname" name="su_vorname" id="su_vorname" > <br />
-					<input type="text" placeholder="Name" name="su_name" id="su_name" > <br />
-				    <input type="text" placeholder="E-Mail Adresse" name="su_email" id="su_email" onchange="EmailValidator(this.value)" > <br />
+					<input type="text" placeholder="Name" name="su_vorname" id="su_vorname" > <br />
+					<input type="text" placeholder="Surname" name="su_name" id="su_name" > <br />
+				    <input type="text" placeholder="E-Mail Adress" name="su_email" id="su_email" onchange="EmailValidator(this.value)" > <br />
 					<p id="su_validemail" name="su_validemail"></p>
-					<input type="text" placeholder="Optionale E-Mail Adresse" name="su_emailopt" id="su_emailopt" onchange="EmailValidatorOpt(this.value)" > <br />
+					<input type="text" placeholder="Optional E-Mail Adress" name="su_emailopt" id="su_emailopt" onchange="EmailValidatorOpt(this.value)" > <br />
 					<p id="su_validemailopt" name="su_validemailopt"></p>
-                    <input type="password" placeholder="Passwort" name="su_psw_1" id="su_psw_1"  onchange="PwValidator(this.value, su_psw_2.value)" > <br />
-                    <input type="password" placeholder="Passwort bestätigen" name="su_psw_2" id="su_psw_2" onchange="PwValidator(su_psw_1.value, this.value)" > <br />
+                    <input type="password" placeholder="Password" name="su_psw_1" id="su_psw_1"  onchange="PwValidator(this.value, su_psw_2.value)" > <br />
+                    <input type="password" placeholder="Confirm Password" name="su_psw_2" id="su_psw_2" onchange="PwValidator(su_psw_1.value, this.value)" > <br />
 					<p id="su_validpw" name="su_validpw"></p>
                     <input type="submit" name="su_signup_btn" value="Sign up!" onclick="SignUp(this.value, su_vorname.value, su_name.value, su_email.value, su_emailopt.value, su_psw_1.value, su_psw_2.value)" >
                 </div>
 				<div class="container" id="su_success" style="display: none;">
-					<h3>Registrierung erfolgreich. Bitte einloggen. <a href="login.php">Login</a> </h3>
+					<h3>successfully registered<a href="login.php">Login</a> </h3>
                 </div>
 				<div class="container" id="su_error" style="display: none;">
 					<h3 style="color: red; font-weight: bold;">Fehler bei der Registrierung. Bitte versuchen sie es erneuert. <a href="sign_up.php">SignUp</a> </h3>
                 </div>
-           
+
         </div>
     </div>
 

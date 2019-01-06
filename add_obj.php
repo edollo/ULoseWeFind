@@ -11,7 +11,7 @@ session_start();
 
 if(!isset($_SESSION['uname'])) {
 	header('Location:login.php');
-    die; 
+    die;
 }
 
 $uname = $_SESSION['uname'];
@@ -70,17 +70,13 @@ include("lib_core.php");
 								<h1>U Lose We Find</h1>
 								<p>A Webservice to help finding your lost valuables.</p>
 							</header>
-							<div id="add_btn">
-								<form method="POST" action="add_obj.php">
-									<input type="submit" value="+" name="add_button" id="add_button">
-								</form>	
-							</div>
 							<form enctype="multipart/form-data" method="POST" action="lib_core.php">
 								<div class="container">
-									<input type="text" placeholder="Bezeichnung" name="obj_name" id="obj_name" required> <br />
-									<input type="text" placeholder="Beschreibung" name="obj_desc" id="obj_desc" required> <br />
+									<input type="text" placeholder="Title" name="obj_name" id="obj_name" required> <br />
+									<input type="text" placeholder="Description" name="obj_desc" id="obj_desc" required> <br />
+									<input type="text" placeholder="Finderlohn" name="obj_flohn" id="obj_flohn" required> <br />
 									<div class="upload-btn-wrapper">
-										<button>Bild auswählen</button>
+										<button>Choose img</button>
 										<input type="file" accept="image/*" name="obj_img" id="obj_img">
 									</div>
 									<br /> <br /> <br />
@@ -119,4 +115,4 @@ include("lib_core.php");
 			<script src="assets/js/main.js"></script>
 
 	</body>
-</html> 
+</html>

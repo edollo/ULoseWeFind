@@ -1,4 +1,4 @@
-﻿<?php 
+﻿<?php
 ####################################################
 #+------------------------------------------------+#
 #|Project:       ULWF                             |#
@@ -23,10 +23,10 @@ $bindun = mysqli_real_escape_string($db, $_POST['uname']);
 $query = "SELECT Email, Passwort, idPerson FROM Person WHERE Email ='".$bindun."'";
 
 	if ($result = $db->query($query)) {
-		
+
 		//überprüfung benutzer vorhanden
 		if (mysqli_num_rows($result) !== 0)
-		{	
+		{
 			while ($row = $result->fetch_assoc()) {
 
 				//password in hash verwandeln (anhand userid)
@@ -34,13 +34,13 @@ $query = "SELECT Email, Passwort, idPerson FROM Person WHERE Email ='".$bindun."
 
 				//überprüfen ob Benutzerdaten korrekt sind
 				if ($bindun == $row["Email"] and $pw == $row["Passwort"])  {
-	
+
 					$_SESSION['uname'] = $bindun;
 					echo "valid";
 				}
 				else {
 					echo "invalidpw";
-					
+
 					//Vorgägnge damit Session komplett entfernt wird
 					session_unset();
 					session_destroy();
@@ -48,19 +48,19 @@ $query = "SELECT Email, Passwort, idPerson FROM Person WHERE Email ='".$bindun."
 					setcookie(session_name(),'',0,'/');
 					session_regenerate_id(true);
 					session_destroy();
-					
+
 				}
 			}
-		}	
+		}
 		else{
-			
+
 			echo "invaliduname";
-			session_destroy();			
-			
-		}	
+			session_destroy();
+
+		}
 	}
-	$result->free();	
-		
+	$result->free();
+
 }
 
 //weiterleiten auf SignUp Seite
@@ -72,12 +72,12 @@ if(isset($_POST['signup_btn'])) {
 if(isset($_POST['su_emailopt'])) {
 
 	//wenn sie Leer ist --> In ordunung, nicht gezwungen anzugeben
-	if (($_POST['su_emailopt']) == "")  
+	if (($_POST['su_emailopt']) == "")
 	{
 		$mailoptcorrect = true;
 	}
 	//ansonsten muss sie der mailrichtlinie entsprechen
-	else if (filter_var($_POST['su_emailopt'], FILTER_VALIDATE_EMAIL))  
+	else if (filter_var($_POST['su_emailopt'], FILTER_VALIDATE_EMAIL))
 	{
 		$mailoptcorrect = true;
 	}
@@ -107,11 +107,11 @@ if(isset($_POST['ValidateUname'])) {
 
 	//Security /Variablenauslesen
 	$bindun = mysqli_real_escape_string($db, $_POST['su_email']);
-	
+
 	$query = "SELECT Email FROM Person WHERE Email ='".$bindun."'";
 
 	if ($result = $db->query($query)) {
-		
+
 		//Rückgabewert 0 --> Benutzer nicht vorhanden
 		if (mysqli_num_rows($result) == 0)
 		{
@@ -120,7 +120,7 @@ if(isset($_POST['ValidateUname'])) {
 		}
 		else
 		{
-			while ($row = $result->fetch_assoc()) 
+			while ($row = $result->fetch_assoc())
 			{
 				//eigener Name ist ok
 				if($row["Email"] == $_SESSION['uname'])
@@ -136,16 +136,16 @@ if(isset($_POST['ValidateUname'])) {
 				}
 			}
 		}
-	}	
+	}
 }
 
 //überprüfung ob passwörter übereinstimmen
 if(isset($_POST['su_psw_2'])) {
-	
+
 	$bindpw1 = $_POST['su_psw_1'];
 	$bindpw2 = $_POST['su_psw_2'];
 
-	if ($bindpw1 == $bindpw2) 
+	if ($bindpw1 == $bindpw2)
 	{
 		echo "matching";
 
@@ -155,7 +155,7 @@ if(isset($_POST['su_psw_2'])) {
 	else
 	{
 		echo "doesnotmatch";
-		
+
 		$pwcorrect = false;
 	}
 }
@@ -170,10 +170,10 @@ $bindun = mysqli_real_escape_string($db, $_SESSION['uname']);
 $query = "SELECT Email, Passwort, idPerson FROM Person WHERE Email ='".$bindun."'";
 
 	if ($result = $db->query($query)) {
-		
+
 		//überprüfung benutzer vorhanden
 		if (mysqli_num_rows($result) !== 0)
-		{	
+		{
 			while ($row = $result->fetch_assoc()) {
 
 				//password in hash verwandeln (anhand userid)
@@ -181,20 +181,20 @@ $query = "SELECT Email, Passwort, idPerson FROM Person WHERE Email ='".$bindun."
 
 				//überprüfen ob Benutzerdaten korrekt sind
 				if ($bindun == $row["Email"] and $pw == $row["Passwort"])  {
-	
+
 					echo "valid";
 					$oldpwcorrect = true;
-					
+
 				}
 				else {
 					echo "invalidpw";
 					$oldpwcorrect = false;
-	
+
 				}
 			}
-		}	
+		}
 	}
-	$result->free();	
+	$result->free();
 }
 
 
@@ -215,13 +215,13 @@ if(isset($_POST['su_signup_btn'])) {
 	$bindfirstname = mysqli_real_escape_string($db, $_POST['su_vorname']);
 	$bindlastname = mysqli_real_escape_string($db, $_POST['su_name']);
 	$bindpw2 = mysqli_real_escape_string($db, $_POST['su_psw_2']);
-	
+
 	//query's bilen
 	//für password wird defaultwert gesetzt, falls das setzen des passworts fehlschlägt und der Datensatz nicht entfernt werden kann
 	$queryinsert = "INSERT INTO `Person`(`Name`, `Nachname`, `Email`, `Email_optional`, `Passwort`) VALUES ('".$bindfirstname."','".$bindlastname."','".$bindemail."','".$bindemailopt."','default526607929f8bc596763776ee8204d68b17d105db293c373818d99d1')";
-		
+
 	if ($result = $db->query($queryinsert)) {
-	
+
 		if($db->affected_rows > 0)
 		{
 			//generieren des hash passworts
@@ -249,15 +249,15 @@ if(isset($_POST['su_signup_btn'])) {
 				echo "fail";
 			}
 
-				
+
 		}
 		else
 		{
 			echo "fail";
-		
+
 		}
-	
-	}	
+
+	}
 }
 
 if(isset($_POST['up_save_settings_btn'])) {
@@ -267,36 +267,36 @@ if(isset($_POST['up_save_settings_btn'])) {
 	$query = "SELECT idPerson FROM Person WHERE Email ='".$bindun."'";
 
 	if ($result = $db->query($query)) {
-		
+
 		//überprüfung querry erfolgreich
 		if (mysqli_num_rows($result) !== 0)
-		{	
-			while ($row = $result->fetch_assoc()) 
+		{
+			while ($row = $result->fetch_assoc())
 			{
 				$id = $row["idPerson"];
 			}
 		}
-		else 
+		else
 		{
 			echo "fail";
 		}
-		
+
 	}
-	else 
+	else
 	{
 		echo "fail";
 	}
-	
-	$result->free();	
-	
-	
+
+	$result->free();
+
+
 	///werte auslesen
 	$bindemail = mysqli_real_escape_string($db, $_POST['su_email']);
 	$bindemailopt = mysqli_real_escape_string($db, $_POST['su_emailopt']);
 	$bindfirstname = mysqli_real_escape_string($db, $_POST['up_vorname']);
 	$bindlastname = mysqli_real_escape_string($db, $_POST['up_name']);
-	
-	
+
+
 
 
 	//abfrage ob passwort auch gesetzt wird (passwort nicht ändern = neues passwort wird gesetzt)
@@ -307,7 +307,7 @@ if(isset($_POST['up_save_settings_btn'])) {
 			{
 				return;
 				//abbruch
-				
+
 			}
 			else
 			{
@@ -331,64 +331,81 @@ if(isset($_POST['up_save_settings_btn'])) {
 			}
 	}
 
-	
+
 	///daten schreiben
-	
+
 	if ($result = $db->query($querychange)) {
 		if($db->affected_rows > 0)
 		{
 			echo "success";
-			
+
 			//Neue Mail in SESSION setzen
 			$_SESSION['uname'] = $bindemail;
-			
+
 		}
 		else
 		{
 			echo "fail";
 		}
 	}
-	
+
 }
 
 if(isset($_POST['fp_mark'])) {
-	
+
 
 		$query = "SELECT idMarker FROM Gegenstand WHERE idMarker ='".$_POST['fp_mark']."'";
 		$result = mysqli_query($db, $query);
-		
+
 			if ((mysqli_num_rows($result) !== 0)){
 
 				$markid = mysqli_real_escape_string($db, $_POST['fp_mark']);
 				$query = "SELECT Email, Email_optional FROM Person WHERE idPerson = (SELECT Person_idPerson FROM Gegenstand WHERE idMarker = '".$markid."' LIMIT 1) LIMIT 1";
 				$result = mysqli_query($db, $query);
-				
+
 				// While Schleife zur verarbeitung der ausgelesenen Daten
 				while($row = mysqli_fetch_array($result))
 				{
 
-					$markerinfo = [
+					$markerinfo_pre = [
 							"success",
 							$row["Email"],
 							$row["Email_optional"],
-							
-					]; 
 
-				
+					];
+						$query = "SELECT Finderlohn FROM Gegenstand WHERE idMarker = '".$markid."'";
+						$result = mysqli_query($db, $query);
+
+							while($row = mysqli_fetch_array($result))
+							{
+
+								$markerfinderlohn = [
+										"success",
+										$row["Finderlohn"],
+
+								];
+
+								$markerinfo = array_merge($markerinfo_pre, $markerfinderlohn);
+
+
+							}
+
+
 				}
+
 
 			}
 			else {
 
 				$markerinfo = [
 					"error"	,
-				]; 
-			
-			}
-	
+				];
 
-	echo json_encode($markerinfo);		
-	//print_r($markerinfo);		
+			}
+
+
+	echo json_encode($markerinfo);
+	//print_r($markerinfo);
 }
 
 
