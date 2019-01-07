@@ -140,9 +140,9 @@ include("lib_core.php");
 							<div id="marker_success" style="display: none;">
 								<p> The marker you entered is active.<br />
 									Take a Look at the owners Personal data and decide if you want to get in touch.</p>
-									<input type="text" id="fp_mail" disabled > <br />
-									<input type="text" id="fp_mailopt" disabled > <br />
-									<input type="text" id="fp_flohn" disabled > <br />
+									<p>E-Mail:</p><input type="text" id="fp_mail" disabled > <br />
+									<p>Alt. E-Mail:</p><input type="text" id="fp_mailopt" disabled > <br />
+									<p>Reward for the finder in $:</p><input type="text" id="fp_flohn" disabled > <br />
 									<h3>Try other Marker?  <a href="finder_page.php">Finder Page</a> </h3>
 							</div>
 
