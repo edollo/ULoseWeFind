@@ -34,7 +34,7 @@ function show_objects($username, $db) {
 		$p_id = $row[0];
 
 			// Datenbankabfrage zur Ausgabe der richtigen Objekten
-			$query_so = "SELECT Name, Beschreibung, FotoPfad FROM Gegenstand WHERE Person_idPerson = '".$p_id."' ORDER BY Name ASC";
+			$query_so = "SELECT idMarker, Name, Beschreibung, FotoPfad FROM Gegenstand WHERE Person_idPerson = '".$p_id."' ORDER BY Name ASC";
 			$result_so = mysqli_query($db, $query_so);
 
 				// While Schleife zur Verarbeitung der ausgelesenen Dateien
@@ -42,9 +42,10 @@ function show_objects($username, $db) {
 				{
 
 					// Speicherung der Werte in Variablen
-					$obj_name = $row[0];
-					$obj_descript = $row[1];
-					$obj_img_path = $row[2];
+					$obj_marker = $row[0];
+					$obj_name = $row[1];
+					$obj_descript = $row[2];
+					$obj_img_path = $row[3];
 
 					echo "
 						<section class=\"tiles\">
@@ -52,7 +53,7 @@ function show_objects($username, $db) {
 								<span class=\"image\">
 									<img src=\"$obj_img_path\" alt=\"\" />
 								</span>
-								<a href=\"#\">
+								<a href=\"object_page.php\">
 									<h2>$obj_name</h2>
 									<div class=\"content\">
 										<p>$obj_descript</p>
@@ -63,7 +64,10 @@ function show_objects($username, $db) {
 
 				}
 	}
+	return $obj_marker;
 }
+
+$op_marker = show_objects($bindun, $db);
 
 
 // Erstellen der Funktion Add Objects zum Hinzufügen von Objekten
@@ -71,8 +75,8 @@ function add_objects($username, $db) {
     $currentDir = getcwd();
     $uploadDirectory = "/img/";
 	$date = date("d-m-Y-G-i-B");
-	
-	
+
+
 	//security
 	$username = mysqli_real_escape_string($db, $username);
 
@@ -187,6 +191,40 @@ function get_user_information($db, $parm)
 		}
 	}
 }
+
+
+function get_object_information($db, $parm, $op_marker)
+{
+	//uname wird aus security gründen hier ausgelesen
+	$bindun = $_SESSION['uname'];
+	
+	$bindmarker = $op_marker;
+
+	$query = "SELECT Name, Beschreibung, Finderlohn FROM Gegenstand WHERE idMarker ='".$bindmarker."'";
+	$result = mysqli_query($db, $query);
+
+	// While Schleife zur verarbeitung der ausgelesenen Daten
+	while($row = mysqli_fetch_array($result))
+	{
+		if($parm == "Name")
+		{
+			echo $row["Name"];
+
+		}
+		else if($parm == "Beschreibung")
+		{
+			echo $row["Beschreibung"];
+
+		}
+		else if($parm == "Finderlohn")
+		{
+			echo $row["Finderlohn"];
+
+		}
+	}
+}
+
+
 
 // Abfragen zur Sicherstellung das die richtige Funktion ausgeführt wird
 if(isset($_POST['conf_add_button'])) {

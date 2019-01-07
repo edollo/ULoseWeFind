@@ -2,7 +2,7 @@
 //###################################################
 //++++++++++++++++++++++++++++++++++++++++++++++++++#
 //|Project:       ULWF                             |#
-//|Filename:      loser_page.php                   |#
+//|Filename:      object_page.php                  |#
 //|Licence:       © Open Licence			       |#
 //|Created by:    Anto Ivankovic / Samuel Maissen  |#
 //++++++++++++++++++++++++++++++++++++++++++++++++++#
@@ -11,7 +11,7 @@ session_start();
 
 if(!isset($_SESSION['uname'])) {
 	header('Location:login.php');
-    die; 
+    die;
 }
 
 $uname = $_SESSION['uname'];
@@ -72,16 +72,21 @@ include("lib_core.php");
 								<h1>U Lose We Find</h1>
 								<p>A Webservice to help finding your lost valuables.</p>
 							</header>
-							<div id="add_btn">
-								<form method="POST" action="add_obj.php">
-									<input type="submit" value="+">
-								</form>	
-							</div>
-							<?php show_objects($uname, $db); ?>
+							<p>Welcome <?php echo $uname ?> <br />
+							You can modify the objectdata using the Form down below. </p>
+							<section>
+								<div class="container" id="up_form">
+									<input type="text" placeholder="Object title" name="op_name" id="op_name" value="<?php get_object_information($db, "Name", $ob_marker); ?>" required> <br />
+									<input type="text" placeholder="Object description"  name="op_description" id="op_description" value="<?php get_object_information($db, "Beschreibung", $ob_marker); ?>" required> <br />
+									<input type="text" placeholder="Reward for the finder"  name="op_reward" id="op_reward" value="<?php get_object_information($db, "Finderlohn", $ob_marker); ?>" required> <br />
+									<input type="submit" name="op_save_obj_settings_btn" value="Speichern" onclick="SaveSettings(op_name.value, op_description.value)" >
+									<input type="submit" name="op_del_obj_btn" value="Löschen">
+								</div>
+							</section>
 						</div>
 					</div>
 
-				<!-- Footer-->
+				<!-- Footer -->
 					<footer id="footer">
 						<div class="inner">
 							<section>
@@ -110,4 +115,4 @@ include("lib_core.php");
 			<script src="assets/js/main.js"></script>
 
 	</body>
-</html> 
+</html>

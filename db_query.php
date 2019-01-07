@@ -13,6 +13,7 @@ session_start();
 
 //error_reporting(0);
 include("db_con.php");
+include("lib_core.php");
 
 //Login Prozedur
 if(isset($_POST['login_btn'])) {
@@ -407,8 +408,85 @@ if(isset($_POST['fp_mark'])) {
 
 
 	echo json_encode($markerinfo);
-	//print_r($markerinfo);
 }
+
+
+// Methode zur Änderung der Objekt Daten
+if(isset($_POST['op_save_obj_settings_btn'])) {
+
+	//Marker holen
+	$marker_check = $op_marker;
+
+	//id holen
+	$bindun = mysqli_real_escape_string($db, $_SESSION['uname']);
+	$query = "SELECT idPerson FROM Person WHERE Email ='".$bindun."'";
+
+
+
+	if ($result = $db->query($query)) {
+
+		//überprüfung querry erfolgreich
+		if (mysqli_num_rows($result) !== 0)
+		{
+			while ($row = $result->fetch_assoc())
+			{
+				$id = $row["idPerson"];
+				
+				
+
+			}
+		}
+		else
+		{
+			echo "fail";
+		}
+
+	}
+	else
+	{
+		echo "fail";
+	}
+
+	$result->free();
+
+
+	///werte auslesen
+	$bind_obj_name = mysqli_real_escape_string($db, $_POST['op_name']);
+	$bind_obj_description = mysqli_real_escape_string($db, $_POST['op_description']);
+	$bind_obj_reward = mysqli_real_escape_string($db, $_POST['op_reward']);
+
+		//wenn passwort nicht geändert wird muss nur email überprüft werden
+//			if ($userexists || !$mailcorrect || !$mailoptcorrect)
+//			{
+//				return;
+//				//abbruch
+//			}
+//			else
+//			{
+				$querychange = "UPDATE `Gegenstand` SET `Name` = '".$bind_obj_name."', `Beschreibung` = '".$bind_obj_description."', `Finderlohn` = '".$bind_obj_reward."' WHERE `idMarker` = ".$marker;
+
+//			}
+
+
+
+	///daten schreiben
+
+	if ($result = $db->query($querychange)) {
+		if($db->affected_rows > 0)
+		{
+			echo "success";
+
+		}
+		else
+		{
+			echo "fail";
+		}
+	}
+
+}
+
+
+
 
 
 
