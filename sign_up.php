@@ -287,7 +287,7 @@
                     <input type="submit" name="su_signup_btn" value="Sign up!" onclick="SignUp(this.value, su_vorname.value, su_name.value, su_email.value, su_emailopt.value, su_psw_1.value, su_psw_2.value)" >
                 </div>
 				<div class="container" id="su_success" style="display: none;">
-					<h3>successfully registered<a href="login.php">Login</a> </h3>
+					<h3>successfully registered. <a href="login.php">Login</a> </h3>
                 </div>
 				<div class="container" id="su_error" style="display: none;">
 					<h3 style="color: red; font-weight: bold;">Fehler bei der Registrierung. Bitte versuchen sie es erneuert. <a href="sign_up.php">SignUp</a> </h3>

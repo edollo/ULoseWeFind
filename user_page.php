@@ -431,10 +431,10 @@ include("lib_core.php");
 									<input type="submit" name="up_save_settings_btn" value="Speichern" onclick="SaveSettings(up_vorname.value, up_name.value, up_email.value, up_emailopt.value, up_psw_old.value,up_psw_1.value, up_psw_2.value, up_change_pw_btn.value)" >
 								</div>
 								<div class="container" id="up_success" style="display: none;">
-									<h3>Change successful <a href="user_page.php">User Page</a> </h3>
+									<h3>Change successful. <a href="user_page.php">User Page</a> </h3>
 								</div>
 								<div class="container" id="up_error" style="display: none;">
-									<h3 style="color: red; font-weight: bold;">Fehler bei der Änderung. Bitte versuchen sie es erneuert. <a href="user_page.php">User Page</a> </h3>
+									<h3 style="color: red; font-weight: bold;">Error during Change. Please try again. <a href="user_page.php">User Page</a> </h3>
 								</div>
 							</section>
 						</div>
