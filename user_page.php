@@ -1,12 +1,12 @@
 <?php
-####################################################
-#+------------------------------------------------+#
-#|Project:       ULWF                             |#
-#|Filename:      user_page.html                   |#
-#|Licence:       © Open Licence			          |#
-#|Created by:    Anto Ivankovic / Samuel Maissen  |#
-#+------------------------------------------------+#
-####################################################
+//###################################################
+//++++++++++++++++++++++++++++++++++++++++++++++++++#
+//|Project:       ULWF                             |#
+//|Filename:      user_page.php                    |#
+//|Licence:       © Open Licence			       |#
+//|Created by:    Anto Ivankovic / Samuel Maissen  |#
+//++++++++++++++++++++++++++++++++++++++++++++++++++#
+//###################################################
 session_start();
 
 if(!isset($_SESSION['uname'])) {
@@ -419,14 +419,14 @@ include("lib_core.php");
 									<input type="text" placeholder="E-Mail Adress" value="<?php get_user_information($db, "Email"); ?>" name="up_email" id="up_email" onchange="EmailValidator(this.value)" required> <br />
 									<p id="up_validemail" name="up_validemail"></p>
 									<input type="text" placeholder="Optional E-Mail Adress" value="<?php get_user_information($db, "Email_optional"); ?>" name="up_emailopt" id="up_emailopt" onchange="EmailValidatorOpt(this.value)" required> <br />
-									<p id="up_validemailopt" name="up_validemailopt"></p>
+									<p id="up_validemailopt"></p>
 									<input type="submit" name="up_change_pw_btn" id="up_change_pw_btn" value="Passwort Ändern" onclick="ShowPassForm()" ><br><br>
 									<div id="up_pw_form" style="display: none;">
 										<input type="password" placeholder="Old Password" name="up_psw_old" id="up_psw_old" onchange="OldPwValidator(up_psw_old.value)" required> <br />
-										<p id="up_oldvalidpw" name="up_oldvalidpw"></p>
+										<p id="up_oldvalidpw"></p>
 										<input type="password" placeholder="New Password" name="up_psw_1" id="up_psw_1" onchange="PwValidator(this.value, up_psw_2.value)" required> <br />
 										<input type="password" placeholder="Confirm new Password" name="up_psw_2" id="up_psw_2" onchange="PwValidator(up_psw_1.value, this.value)" required> <br />
-										<p id="up_validpw" name="up_validpw"></p>
+										<p id="up_validpw"></p>
 									</div>
 									<input type="submit" name="up_save_settings_btn" value="Speichern" onclick="SaveSettings(up_vorname.value, up_name.value, up_email.value, up_emailopt.value, up_psw_old.value,up_psw_1.value, up_psw_2.value, up_change_pw_btn.value)" >
 								</div>
@@ -454,7 +454,7 @@ include("lib_core.php");
 								</ul>
 							</section>
 							<ul class="copyright">
-								<li>&copy; Untitled. All rights reserved</li><li>Design: ULoseWeFind</a></li>
+								<li>&copy; Untitled. All rights reserved</li><li>Design: ULoseWeFind</li>
 							</ul>
 						</div>
 					</footer>

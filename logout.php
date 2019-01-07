@@ -1,4 +1,13 @@
 <?php
+//###################################################
+//++++++++++++++++++++++++++++++++++++++++++++++++++#
+//|Project:       ULWF                             |#
+//|Filename:      logout.php                       |#
+//|Licence:       © Open Licence			       |#
+//|Created by:    Anto Ivankovic / Samuel Maissen  |#
+//++++++++++++++++++++++++++++++++++++++++++++++++++#
+//###################################################
+
 	//Vorgägnge damit Session komplett entfernt wird
 	session_start();
     session_unset();
