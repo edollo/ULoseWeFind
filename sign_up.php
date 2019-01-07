@@ -277,12 +277,12 @@
 					<input type="text" placeholder="Name" name="su_vorname" id="su_vorname" > <br />
 					<input type="text" placeholder="Surname" name="su_name" id="su_name" > <br />
 				    <input type="text" placeholder="E-Mail Adress" name="su_email" id="su_email" onchange="EmailValidator(this.value)" > <br />
-					<p id="su_validemail" name="su_validemail"></p>
+					<p id="su_validemail"></p>
 					<input type="text" placeholder="Optional E-Mail Adress" name="su_emailopt" id="su_emailopt" onchange="EmailValidatorOpt(this.value)" > <br />
-					<p id="su_validemailopt" name="su_validemailopt"></p>
+					<p id="su_validemailopt"></p>
                     <input type="password" placeholder="Password" name="su_psw_1" id="su_psw_1"  onchange="PwValidator(this.value, su_psw_2.value)" > <br />
                     <input type="password" placeholder="Confirm Password" name="su_psw_2" id="su_psw_2" onchange="PwValidator(su_psw_1.value, this.value)" > <br />
-					<p id="su_validpw" name="su_validpw"></p>
+					<p id="su_validpw"></p>
                     <input type="submit" name="su_signup_btn" value="Sign up!" onclick="SignUp(this.value, su_vorname.value, su_name.value, su_email.value, su_emailopt.value, su_psw_1.value, su_psw_2.value)" >
                 </div>
 				<div class="container" id="su_success" style="display: none;">
@@ -309,7 +309,7 @@
                 </ul>
             </section>
             <ul class="copyright">
-                <li>&copy; Untitled. All rights reserved</li><li>Design: ULoseWeFind</a></li>
+                <li>&copy; Untitled. All rights reserved</li><li>Design: ULoseWeFind</li>
             </ul>
         </div>
     </footer>

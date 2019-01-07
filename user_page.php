@@ -29,8 +29,7 @@ include("lib_core.php");
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<script>
+		<script>
 	function PwValidator(up_psw_1_f, up_psw_2_f) {
 
 			if (document.getElementById("up_psw_1").value == "" && document.getElementById("up_psw_2").value == "") {
@@ -367,11 +366,9 @@ include("lib_core.php");
 				pwbutton.value = "Passwort Ändern"
 			  }
 		}
-
-
-
-
 	</script>
+		
+	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
 			<div id="wrapper">

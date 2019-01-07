@@ -92,7 +92,7 @@ include("db_con.php");
 								</ul>
 							</section>
 							<ul class="copyright">
-								<li>&copy; Untitled. All rights reserved</li><li>Design: ULoseWeFind</a></li>
+								<li>&copy; Untitled. All rights reserved</li><li>Design: ULoseWeFind</li>
 							</ul>
 						</div>
 					</footer>

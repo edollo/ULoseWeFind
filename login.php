@@ -150,9 +150,9 @@ if(isset($_SESSION['uname'])) {
 								<!--<form method="POST"> action="CheckCred(uname.value, psw.value)">-->
 									<div class="container">
 									<input type="text" placeholder="Enter Email" name="uname" id="uname" onchange="UserValidator(this.value)" required > <br />
-									<p id="Valid" name="Valid"></p>
+									<p id="Valid" ></p>
 									<input type="password" placeholder="Enter Password" name="psw" id="psw" required> <br /><br />
-									<p id="validpw" name="validpw"></p>
+									<p id="validpw"></p>
 									<input type="submit" name="login_btn" value="Login" onclick="CheckCred(this.value, uname.value, psw.value)" >
 									</div>
 								<!--</form>-->
@@ -181,7 +181,7 @@ if(isset($_SESSION['uname'])) {
 								</ul>
 							</section>
 							<ul class="copyright">
-								<li>&copy; Untitled. All rights reserved</li><li>Design: ULoseWeFind</a></li>
+								<li>&copy; Untitled. All rights reserved</li><li>Design: ULoseWeFind</li>
 							</ul>
 						</div>
 					</footer>
