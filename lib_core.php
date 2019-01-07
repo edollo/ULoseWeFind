@@ -69,7 +69,9 @@ function show_objects($username, $db) {
 function add_objects($username, $db) {
     $currentDir = getcwd();
     $uploadDirectory = "/img/";
-
+	$date = date("d-m-Y-G-i-B");
+	
+	
 	//security
 	$username = mysqli_real_escape_string($db, $username);
 
@@ -88,9 +90,9 @@ function add_objects($username, $db) {
     $fileExtension = strtolower(end(explode('.',$fileName)));
 
 	// Der Absolute Pfad wird in die Variable uploadPath geschrieben
-    $uploadPath = $currentDir . $uploadDirectory . basename($fileName);
+    $uploadPath = $currentDir . $uploadDirectory  . $date . basename($fileName);
 	// Der verkürzte Pfad, bestehend aus Bildname und dem Ordner /img wird in die uploadImg Variable geschrieben
-	$uploadImg = "img/". basename($fileName);
+	$uploadImg = "img/" . $date . basename($fileName);
 
 		// Überprüfung ob Dateiendung zugelassen ist
         if (! in_array($fileExtension,$fileExtensions)) {
