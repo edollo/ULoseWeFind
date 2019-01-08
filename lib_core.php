@@ -46,6 +46,7 @@ function show_objects($username, $db) {
 					$obj_name = $row[1];
 					$obj_descript = $row[2];
 					$obj_img_path = $row[3];
+				
 
 					echo "
 						<section class=\"tiles\">
@@ -53,7 +54,7 @@ function show_objects($username, $db) {
 								<span class=\"image\">
 									<img src=\"$obj_img_path\" alt=\"\" />
 								</span>
-								<a href=\"object_page.php\">
+								<a href=\"object_page.php?lp_marker=$obj_marker\">
 									<h2>$obj_name</h2>
 									<div class=\"content\">
 										<p>$obj_descript</p>
@@ -64,10 +65,8 @@ function show_objects($username, $db) {
 
 				}
 	}
-	return $obj_marker;
-}
 
-$op_marker = show_objects($bindun, $db);
+}
 
 
 // Erstellen der Funktion Add Objects zum Hinzufügen von Objekten

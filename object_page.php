@@ -16,6 +16,10 @@ if(!isset($_SESSION['uname'])) {
 
 $uname = $_SESSION['uname'];
 
+//Übergebene Markerid wird übergeben
+$op_marker = $_GET['lp_marker'];
+
+
 include("db_con.php");
 include("lib_core.php");
 
@@ -30,6 +34,92 @@ include("lib_core.php");
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script>
+		function SaveMarkerSettings(op_name_f, op_description_f, op_reward_f, op_id_f) {
+			if (document.getElementById("op_name").value == "" || document.getElementById("op_description").value == "" || document.getElementById("op_reward").value == "" || op_id_f == "") {
+				
+				if (document.getElementById("op_name").value == "")
+				{
+					document.getElementById("op_name").style.borderBottom = "solid 1px red";
+				}
+				else
+				{
+					document.getElementById("op_name").style.borderBottom = "solid 1px #c9c9c9";
+				}
+
+				
+				if (document.getElementById("op_description").value == "")
+				{
+					document.getElementById("op_description").style.borderBottom = "solid 1px red";
+				}
+				else
+				{
+
+					document.getElementById("op_description").style.borderBottom = "solid 1px #c9c9c9";
+				}
+
+				if (document.getElementById("op_reward").value == "")
+				{
+					document.getElementById("op_reward").style.borderBottom = "solid 1px red";
+				}
+				else
+				{
+					document.getElementById("op_reward").style.borderBottom = "solid 1px #c9c9c9";
+				}
+				
+				return;
+			} 
+			
+			else { 
+
+				if (window.XMLHttpRequest) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp = new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						
+						//felder auf grau setzten, falls vorher fehlerhaft war
+						document.getElementById("op_name").style.borderBottom = "solid 1px #c9c9c9";
+						document.getElementById("op_description").style.borderBottom = "solid 1px #c9c9c9";
+						document.getElementById("op_reward").style.borderBottom = "solid 1px #c9c9c9";
+						
+						
+						//regex für überprüfung
+						var s = /success/;
+						var f = /fail/;
+						var d = /denied/;
+						
+						
+						if(s.test(this.responseText))
+						{
+							document.getElementById("op_form").style.display = 'none';
+							document.getElementById("op_success").style.display = 'block';
+						}
+						else if (f.test(this.responseText))
+						{
+							document.getElementById("op_form").style.display = 'none';
+							document.getElementById("op_error").style.display = 'block';
+						}
+						else if (d.test(this.responseText))
+						{
+							document.getElementById("op_form").style.display = 'none';
+							document.getElementById("op_denied").style.display = 'block';
+							document.write(this.responseText);
+						}
+		
+					}
+				};
+
+				xmlhttp.open("POST","db_query.php",true);
+				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xmlhttp.send("op_save_obj_settings_btn=" + true + "&op_name=" + op_name_f + "&op_description=" + op_description_f + "&op_reward=" + op_reward_f + "&op_id=" + op_id_f);
+			}
+		}
+		</script>
 	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
@@ -75,12 +165,21 @@ include("lib_core.php");
 							<p>Welcome <?php echo $uname ?> <br />
 							You can modify the objectdata using the Form down below. </p>
 							<section>
-								<div class="container" id="up_form">
-									<input type="text" placeholder="Object title" name="op_name" id="op_name" value="<?php get_object_information($db, "Name", $ob_marker); ?>" required> <br />
-									<input type="text" placeholder="Object description"  name="op_description" id="op_description" value="<?php get_object_information($db, "Beschreibung", $ob_marker); ?>" required> <br />
-									<input type="text" placeholder="Reward for the finder"  name="op_reward" id="op_reward" value="<?php get_object_information($db, "Finderlohn", $ob_marker); ?>" required> <br />
-									<input type="submit" name="op_save_obj_settings_btn" value="Speichern" onclick="SaveSettings(op_name.value, op_description.value)" >
-									<input type="submit" name="op_del_obj_btn" value="Löschen">
+								<div class="container" id="op_form">
+									<input type="text" placeholder="Object title" name="op_name" id="op_name" value="<?php get_object_information($db, "Name", $op_marker); ?>" required> <br />
+									<input type="text" placeholder="Object description"  name="op_description" id="op_description" value="<?php get_object_information($db, "Beschreibung", $op_marker); ?>" required> <br />
+									<input type="text" placeholder="Reward for the finder"  name="op_reward" id="op_reward" value="<?php get_object_information($db, "Finderlohn", $op_marker); ?>" required> <br />
+									<input type="submit" name="op_save_obj_settings_btn" value="Save" onclick="SaveMarkerSettings(op_name.value, op_description.value, op_reward.value, '<?php echo $op_marker; ?>')" >
+									<input type="submit" name="op_del_obj_btn" value="Delete">
+								</div>
+								<div class="container" id="op_success" style="display: none;">
+									<h3>Change successful. <a href="loser_page.php">My Objects</a> </h3>
+								</div>
+								<div class="container" id="op_error" style="display: none;">
+									<h3 style="color: red; font-weight: bold;">Error during Change. Please try again. <a href="loser_page.php">My Objects</a> </h3>
+								</div>
+								<div class="container" id="op_denied" style="display: none;">
+									<h3 style="color: red; font-weight: bold;">Access Denied. <a href="loser_page.php">My Objects</a> </h3>
 								</div>
 							</section>
 						</div>
