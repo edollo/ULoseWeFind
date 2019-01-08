@@ -24,6 +24,13 @@ include("db_con.php");
 include("lib_core.php");
 
 
+if(get_marker_permission($db, $op_marker) == "denied") {
+	header('Location:home.php');
+    die; 
+}
+
+
+
 ?>
 <!DOCTYPE HTML>
 
@@ -108,7 +115,6 @@ include("lib_core.php");
 						{
 							document.getElementById("op_form").style.display = 'none';
 							document.getElementById("op_denied").style.display = 'block';
-							document.write(this.responseText);
 						}
 		
 					}
@@ -119,6 +125,57 @@ include("lib_core.php");
 				xmlhttp.send("op_save_obj_settings_btn=" + true + "&op_name=" + op_name_f + "&op_description=" + op_description_f + "&op_reward=" + op_reward_f + "&op_id=" + op_id_f);
 			}
 		}
+		
+		function DeleteMarker(op_id_f) {
+			if (op_id_f == "") {
+				
+				return;
+			} 
+			
+			else { 
+
+				if (window.XMLHttpRequest) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp = new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						
+						//regex für überprüfung
+						var s = /success/;
+						var f = /fail/;
+						var d = /denied/;
+						
+						
+						if(s.test(this.responseText))
+						{
+							document.getElementById("op_form").style.display = 'none';
+							document.getElementById("op_success").style.display = 'block';
+						}
+						else if (f.test(this.responseText))
+						{
+							document.getElementById("op_form").style.display = 'none';
+							document.getElementById("op_error").style.display = 'block';
+						}
+						else if (d.test(this.responseText))
+						{
+							document.getElementById("op_form").style.display = 'none';
+							document.getElementById("op_denied").style.display = 'block';
+						}
+		
+					}
+				};
+
+				xmlhttp.open("POST","db_query.php",true);
+				xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xmlhttp.send("op_del_obj_btn=" + true + "&op_id=" + op_id_f);
+			}
+		}
+
+
 		</script>
 	</head>
 	<body class="is-preload">
@@ -166,11 +223,13 @@ include("lib_core.php");
 							You can modify the objectdata using the Form down below. </p>
 							<section>
 								<div class="container" id="op_form">
-									<input type="text" placeholder="Object title" name="op_name" id="op_name" value="<?php get_object_information($db, "Name", $op_marker); ?>" required> <br />
-									<input type="text" placeholder="Object description"  name="op_description" id="op_description" value="<?php get_object_information($db, "Beschreibung", $op_marker); ?>" required> <br />
-									<input type="text" placeholder="Reward for the finder"  name="op_reward" id="op_reward" value="<?php get_object_information($db, "Finderlohn", $op_marker); ?>" required> <br />
-									<input type="submit" name="op_save_obj_settings_btn" value="Save" onclick="SaveMarkerSettings(op_name.value, op_description.value, op_reward.value, '<?php echo $op_marker; ?>')" >
-									<input type="submit" name="op_del_obj_btn" value="Delete">
+									<p><b>Marker ID</b></p><input type="text" name="op_id" id="op_id" value="<?php echo $op_marker; ?>" disabled> <br />
+									<p><b>Object title</b></p><input type="text" placeholder="Object title" name="op_name" id="op_name" value="<?php get_object_information($db, "Name", $op_marker); ?>" required> <br />
+									<p><b>Object description</b></p><input type="text" placeholder="Object description"  name="op_description" id="op_description" value="<?php get_object_information($db, "Beschreibung", $op_marker); ?>" required> <br />
+									<p><b>Reward for the finder</b></p><input type="text" placeholder="Reward for the finder"  name="op_reward" id="op_reward" value="<?php get_object_information($db, "Finderlohn", $op_marker); ?>" required> <br />
+									<input type="submit" name="op_save_obj_settings_btn" value="Save" onclick="SaveMarkerSettings(op_name.value, op_description.value, op_reward.value, op_id.value)" >
+									<input type="submit" name="op_del_obj_btn" value="Delete" onclick="DeleteMarker(op_id.value)">
+									<input type="submit" name="op_del_return_btn" value="Return" onclick="location.href='loser_page.php';")">
 								</div>
 								<div class="container" id="op_success" style="display: none;">
 									<h3>Change successful. <a href="loser_page.php">My Objects</a> </h3>

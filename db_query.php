@@ -338,18 +338,16 @@ if(isset($_POST['up_save_settings_btn'])) {
 	///daten schreiben
 
 	if ($result = $db->query($querychange)) {
-		if($db->affected_rows > 0)
-		{
-			echo "success";
+		
+		echo "success";
 
-			//Neue Mail in SESSION setzen
-			$_SESSION['uname'] = $bindemail;
+		//Neue Mail in SESSION setzen
+		$_SESSION['uname'] = $bindemail;
 
-		}
-		else
-		{
-			echo "fail";
-		}
+	}
+	else
+	{
+		echo "fail";
 	}
 
 }
@@ -426,7 +424,7 @@ if(isset($_POST['op_save_obj_settings_btn'])) {
 	//authorisierung ob befugt änderungen an marker zu machen
 
 	$query = "SELECT Name FROM Gegenstand WHERE idMarker = '".$bind_obj_id."' and Person_idPerson = (SELECT idPerson FROM Person WHERE Email ='".$_SESSION['uname']."') LIMIT 1";
-	echo $query;
+	
 	
 	
 	if ($result = $db->query($query)) {
@@ -440,22 +438,19 @@ if(isset($_POST['op_save_obj_settings_btn'])) {
 		else
 		{
 
-			
 			//querry Änderung Daten
-			$querychange = "UPDATE `Gegenstand` SET `Name` = '".$bind_obj_name."', `Beschreibung` = '".$bind_obj_description."', `Finderlohn` = '".$bind_obj_reward."' WHERE `idMarker` = ".$bind_obj_id;
-			echo $query;
+			$querychange = "UPDATE `Gegenstand` SET `Name` = '".$bind_obj_name."', `Beschreibung` = '".$bind_obj_description."', `Finderlohn` = '".$bind_obj_reward."' WHERE `idMarker` = ".$bind_obj_id." LIMIT 1";
+			
 			
 			///daten schreiben
 			if ($result = $db->query($querychange)) {
-				if($db->affected_rows > 0)
-				{
-					echo "success";
-
-				}
-				else
-				{
-					echo "fail";
-				}
+				
+				echo "success";
+	
+			}
+			else
+			{
+				echo "fail";
 			}
 		}
 	}
@@ -466,6 +461,55 @@ if(isset($_POST['op_save_obj_settings_btn'])) {
 
 
 }
+
+
+// Methode zur Änderung der Objekt Daten
+if(isset($_POST['op_del_obj_btn'])) {
+
+	
+	///id auslesen
+	$bind_obj_id = mysqli_real_escape_string($db, $_POST['op_id']);
+
+	//authorisierung ob befugt änderungen an marker zu machen
+	$query = "SELECT Name FROM Gegenstand WHERE idMarker = '".$bind_obj_id."' and Person_idPerson = (SELECT idPerson FROM Person WHERE Email ='".$_SESSION['uname']."') LIMIT 1";
+
+	if ($result = $db->query($query)) {
+
+		//überprüfung querry erfolgreich
+		if (mysqli_num_rows($result) == 0)
+		{
+			//wenn keine Rückgabe ist user nicht befugt da nicht sein Gegenstand
+			echo "denied";
+		}
+		else
+		{
+
+			//querry Änderung Daten
+			$querydelete = "DELETE FROM `Gegenstand` WHERE `idMarker` = ".$bind_obj_id." LIMIT 1";
+			
+			///marker löschen
+			if ($result = $db->query($querydelete)) {
+				
+				echo "success";
+	
+			}
+			else
+			{
+				echo "fail";
+			}
+		}
+	}
+	else
+	{
+		echo "fail";
+	}
+
+
+}
+
+
+
+
 
 $db->close();
 ?>

@@ -74,9 +74,9 @@ include("lib_core.php");
 							</header>
 							<form enctype="multipart/form-data" method="POST" action="lib_core.php">
 								<div class="container">
-									<input type="text" placeholder="Title" name="obj_name" id="obj_name" required> <br />
-									<input type="text" placeholder="Description" name="obj_desc" id="obj_desc" required> <br />
-									<input type="text" placeholder="Finderlohn" name="obj_flohn" id="obj_flohn" required> <br />
+									<input type="text" placeholder="Object title" name="obj_name" id="obj_name" required> <br />
+									<input type="text" placeholder="Object description" name="obj_desc" id="obj_desc" required> <br />
+									<input type="text" placeholder="Reward for the finder" name="obj_flohn" id="obj_flohn" required> <br />
 									<div class="upload-btn-wrapper">
 										<button>Choose img</button>
 										<input type="file" accept="image/*" name="obj_img" id="obj_img">

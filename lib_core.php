@@ -224,6 +224,28 @@ function get_object_information($db, $parm, $op_marker)
 }
 
 
+function get_marker_permission($db, $op_marker){
+///id auslesen
+$bind_obj_id = mysqli_real_escape_string($db, $op_marker);
+
+//authorisierung ob befugt änderungen an marker zu machen
+$query = "SELECT Name FROM Gegenstand WHERE idMarker = '".$bind_obj_id."' and Person_idPerson = (SELECT idPerson FROM Person WHERE Email ='".$_SESSION['uname']."') LIMIT 1";
+
+if ($result = $db->query($query)) {
+		//überprüfung querry erfolgreich
+		if (mysqli_num_rows($result) == 0)
+		{
+			//wenn keine Rückgabe ist user nicht befugt da nicht sein Gegenstand
+			return "denied";
+		}
+		else
+		{
+			return "success";
+		}
+
+	}
+}
+
 
 // Abfragen zur Sicherstellung das die richtige Funktion ausgeführt wird
 if(isset($_POST['conf_add_button'])) {

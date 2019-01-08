@@ -19,7 +19,6 @@ $uname = $_SESSION['uname'];
 include("db_con.php");
 include("lib_core.php");
 
-
 ?>
 <!DOCTYPE HTML>
 
