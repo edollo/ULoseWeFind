@@ -32,6 +32,113 @@ include("lib_core.php");
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script>
+			function AddObject(obj_name_f, obj_desc_f, obj_flohn_f, obj_img_f) {
+			if (document.getElementById("obj_name").value == "" || document.getElementById("obj_desc").value == "" || document.getElementById("obj_flohn").value == "" || document.getElementById("obj_img").value == "") {
+				
+				if (document.getElementById("obj_name").value == "")
+				{
+					document.getElementById("obj_name").style.borderBottom = "solid 1px red";
+				}
+				else
+				{
+					document.getElementById("obj_name").style.borderBottom = "solid 1px #c9c9c9";
+				}
+
+				
+				if (document.getElementById("obj_desc").value == "")
+				{
+					document.getElementById("obj_desc").style.borderBottom = "solid 1px red";
+				}
+				else
+				{
+
+					document.getElementById("obj_desc").style.borderBottom = "solid 1px #c9c9c9";
+				}
+
+				if (document.getElementById("obj_flohn").value == "")
+				{
+					document.getElementById("obj_flohn").style.borderBottom = "solid 1px red";
+				}
+				else
+				{
+					document.getElementById("obj_flohn").style.borderBottom = "solid 1px #c9c9c9";
+				}
+				
+
+				if (document.getElementById("obj_img").value == "")
+				{
+					document.getElementById("btn_obj_img").style.border= "solid 1px red";
+				}
+				else
+				{
+					document.getElementById("btn_obj_img").style.border= "solid 1px #c9c9c9";
+				}
+
+				return;
+			} 
+			
+			else { 
+
+				if (window.XMLHttpRequest) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp = new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						
+						//felder auf grau setzten, falls vorher fehlerhaft war
+						document.getElementById("btn_obj_img").style.border = "solid 1px #c9c9c9";
+						document.getElementById("obj_flohn").style.borderBottom = "solid 1px #c9c9c9";
+						document.getElementById("obj_desc").style.borderBottom = "solid 1px #c9c9c9";
+						document.getElementById("obj_name").style.borderBottom = "solid 1px #c9c9c9";
+
+
+						
+						
+						//regex für überprüfung
+						var s = /success/;
+						var f = /Failed/;
+						
+						
+						
+						if(s.test(this.responseText))
+						{
+							document.getElementById("obj_form").style.display = 'none';
+							document.getElementById("obj_success").style.display = 'block';
+						}
+						else if (f.test(this.responseText))
+						{
+							document.getElementById("obj_form").style.display = 'none';
+							document.getElementById("obj_error").style.display = 'block';
+							document.getElementById("obj_p_error").innerHTML = this.responseText;
+							
+						}
+
+					}
+				};
+				
+				//form generieren, da sonst nicht geht zusammen mit File
+				var fdata = new FormData();
+				fdata.append("conf_add_button", true);
+				fdata.append("obj_name", obj_name_f);
+				fdata.append("obj_desc", obj_desc_f);
+				fdata.append("obj_flohn", obj_flohn_f);
+
+				//bildauslesen
+				var file = obj_img_f.files[0];
+                fdata.append('obj_img',file);
+
+				//abschicken
+				xmlhttp.open("POST","db_query.php",true);
+				xmlhttp.send(fdata);
+				
+			}
+		}
+		</script>
 	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
@@ -72,19 +179,26 @@ include("lib_core.php");
 								<h1>U Lose We Find</h1>
 								<p>A Webservice to help finding your lost valuables.</p>
 							</header>
-							<form enctype="multipart/form-data" method="POST" action="lib_core.php">
+							<div class="container" id="obj_form">
 								<div class="container">
 									<input type="text" placeholder="Object title" name="obj_name" id="obj_name" required> <br />
 									<input type="text" placeholder="Object description" name="obj_desc" id="obj_desc" required> <br />
 									<input type="text" placeholder="Reward for the finder" name="obj_flohn" id="obj_flohn" required> <br />
 									<div class="upload-btn-wrapper">
-										<button>Choose img</button>
+										<button id="btn_obj_img">Choose img</button>
 										<input type="file" accept="image/*" name="obj_img" id="obj_img">
 									</div>
 									<br /> <br /> <br />
-									<input type="submit" value="Objekt erstellen" name="conf_add_button" id="conf_add_button">
+									<input type="submit" value="Create Object" name="conf_add_button" id="conf_add_button" onclick="AddObject(obj_name.value, obj_desc.value, obj_flohn.value, obj_img)">
 								</div>
-						    </form>
+							</div>
+							<div class="container" id="obj_success" style="display: none;">
+									<h3>New Object Created successful. <a href="loser_page.php">My Objects</a> </h3>
+								</div>
+								<div class="container" id="obj_error" style="display: none;">
+									<p style="color: red;" id="obj_p_error"></p>
+									<h3 style="color: red; font-weight: bold;">Error during creating. Please try again. <a href="object_page.php">Create Object</a> </h3>
+								</div>
 						</div>
 					</div>
 

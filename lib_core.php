@@ -69,89 +69,6 @@ function show_objects($username, $db) {
 }
 
 
-// Erstellen der Funktion Add Objects zum Hinzufügen von Objekten
-function add_objects($username, $db) {
-    $currentDir = getcwd();
-    $uploadDirectory = "/img/";
-	$date = date("d-m-Y-G-i-B");
-
-
-	//security
-	$username = mysqli_real_escape_string($db, $username);
-
-
-	// Erstellen von Array zur Speicherung von Fehlermeldung
-    $errors = [];
-
-	// Alle zugelassenen File Extensions in Array hinterlegen
-    $fileExtensions = ['jpeg','jpg','png'];
-
-	// Variablen werden deklariert
-    $fileName = $_FILES['obj_img']['name'];
-    $fileSize = $_FILES['obj_img']['size'];
-    $fileTmpName  = $_FILES['obj_img']['tmp_name'];
-    $fileType = $_FILES['obj_img']['type'];
-    $fileExtension = strtolower(end(explode('.',$fileName)));
-
-	// Der Absolute Pfad wird in die Variable uploadPath geschrieben
-    $uploadPath = $currentDir . $uploadDirectory  . $date . basename($fileName);
-	// Der verkürzte Pfad, bestehend aus Bildname und dem Ordner /img wird in die uploadImg Variable geschrieben
-	$uploadImg = "img/" . $date . basename($fileName);
-
-		// Überprüfung ob Dateiendung zugelassen ist
-        if (! in_array($fileExtension,$fileExtensions)) {
-            $errors[] = "Diese Datei ist nicht erlaubt. Bitte wählen sie eine .JPG oder eine .PNG Datei";
-        }
-
-		// Überprüfung ob Dateigrösse zugelassen ist
-        if ($fileSize > 2000000) {
-            $errors[] = "Die Datei ist zu gross.";
-        }
-
-		// Falls sich nichts im Array Erros befindet, wird das Bild hochgeladen. Ansonsten wird der genaue Fehler ausgegeben
-        if (empty($errors)) {
-            $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
-
-            if ($didUpload) {
-
-					$obj_name = htmlentities($_POST['obj_name']);
-					$obj_descript = htmlentities($_POST['obj_desc']);
-					$obj_flohn = htmlentities($_POST['obj_flohn']);
-					$obj_img_path = htmlentities ($uploadImg);
-
-						// Datenbankabfrage zur genauen Identifizierung des Benutzers
-						$query = "SELECT idPerson FROM Person WHERE Email = '".$username."' LIMIT 1";
-						$result = mysqli_query($db, $query);
-
-						// While Schleife zur verarbeitung der ausgelesenen Daten
-						while($row = mysqli_fetch_array($result))
-						{
-							// ID des momentan eingeloggten Benutzers
-							$p_id = $row[0];
-
-							// Upload Query
-							$query = "INSERT INTO Gegenstand (Name, Beschreibung, Person_idPerson, FotoPfad, Finderlohn) VALUES ('$obj_name','$obj_descript','$p_id','$obj_img_path','$obj_flohn')";
-
-							  if ( !(mysqli_query($db, $query)) ) {
-								  die('<p>Fehler bei der Datenübergabe in die Datenbank</p></body></html>');
-							   }
-							   else {
-								   // Weiterleitung auf die Seite "loser_page.php", falls Upload erfolgreich
-								  header('Refresh: 0 ; url=loser_page.php');
-							   }
-						}
-
-				} else {
-					echo "Ein Fehler liegt vor, bitte kontaktieren Sie den Systemadministrator";
-				}
-			} else {
-				foreach ($errors as $error) {
-					echo $error . "vorherstehende Fehler sind aufgetretten" . "\n";
-				}
-			}
-}
-
-
 function get_user_information($db, $parm)
 {
 	//uname wird aus security gründen hier ausgelesen
@@ -245,20 +162,6 @@ if ($result = $db->query($query)) {
 
 	}
 }
-
-
-// Abfragen zur Sicherstellung das die richtige Funktion ausgeführt wird
-if(isset($_POST['conf_add_button'])) {
-	 add_objects($uname, $db);
-}
-
-
-
-
-
-
-
-
 
 
 ?>

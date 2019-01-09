@@ -512,6 +512,87 @@ if(isset($_POST['op_del_obj_btn'])) {
 }
 
 
+// Methode zur Änderung der Objekt Daten
+if(isset($_POST['conf_add_button'])) {
+	
+	$currentDir = getcwd();
+    $uploadDirectory = "/img/";
+	$date = date("d-m-Y-G-i-B");
+
+
+	//security
+	$username = mysqli_real_escape_string($db, $_SESSION['uname']);
+
+	// Alle zugelassenen File Extensions in Array hinterlegen
+    $fileExtensions = ['jpeg','jpg','png'];
+
+	// Variablen werden deklariert
+    $fileName = $_FILES['obj_img']['name'];
+    $fileSize = $_FILES['obj_img']['size'];
+    $fileTmpName  = $_FILES['obj_img']['tmp_name'];
+    $fileType = $_FILES['obj_img']['type'];
+    $fileExtension = strtolower(end(explode('.',$fileName)));
+
+	// Der Absolute Pfad wird in die Variable uploadPath geschrieben
+    $uploadPath = $currentDir . $uploadDirectory  . $date . basename($fileName);
+	// Der verkürzte Pfad, bestehend aus Bildname und dem Ordner /img wird in die uploadImg Variable geschrieben
+	$uploadImg = "img/" . $date . basename($fileName);
+
+		// Überprüfung ob Dateiendung zugelassen ist
+        if (! in_array($fileExtension,$fileExtensions)) {
+			echo "<p>Failed: This file is not allowed. Please use .JPG or .PNG .</p>";
+			$error = "yes";
+        }
+
+		// Überprüfung ob Dateigrösse zugelassen ist
+        if ($fileSize > 2000000) {
+			echo "<p>Failed: Picture is to big.</p>";
+			$error = "yes";
+        }
+
+		// Falls sich nichts im Array Erros befindet, wird das Bild hochgeladen. Ansonsten wird der genaue Fehler ausgegeben
+        if (empty($error)) {
+            $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
+
+            if ($didUpload) {
+
+					$obj_name = htmlentities($_POST['obj_name']);
+					$obj_descript = htmlentities($_POST['obj_desc']);
+					$obj_flohn = htmlentities($_POST['obj_flohn']);
+					$obj_img_path = htmlentities ($uploadImg);
+
+						// Datenbankabfrage zur genauen Identifizierung des Benutzers
+						$query = "SELECT idPerson FROM Person WHERE Email = '".$username."' LIMIT 1";
+						$result = mysqli_query($db, $query);
+
+						// While Schleife zur verarbeitung der ausgelesenen Daten
+						while($row = mysqli_fetch_array($result))
+						{
+							// ID des momentan eingeloggten Benutzers
+							$p_id = $row[0];
+
+							// Upload Query
+							$query = "INSERT INTO Gegenstand (Name, Beschreibung, Person_idPerson, FotoPfad, Finderlohn) VALUES ('$obj_name','$obj_descript','$p_id','$obj_img_path','$obj_flohn')";
+
+							  if ( !(mysqli_query($db, $query)) ) {
+
+									echo "<p>Failed: Cannot write to database</p>";
+								 
+							   }
+							   else {
+
+									echo "success";
+							   }
+						}
+
+				} else {
+					echo "<p>Failed: Cannot upload file<p>";
+				}
+		} 
+}
+
+
+
 
 
 
