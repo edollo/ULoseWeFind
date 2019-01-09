@@ -352,14 +352,16 @@ if(isset($_POST['up_save_settings_btn'])) {
 
 }
 
+// Methode zum Abgleich vom Marker und zur ausgabe von Kundendaten auf der Finder Page
 if(isset($_POST['fp_mark'])) {
 
-
+		// Auslesen der Marker ID die mit der vom User eingegebenen übereinstimmt
 		$query = "SELECT idMarker FROM Gegenstand WHERE idMarker ='".$_POST['fp_mark']."'";
 		$result = mysqli_query($db, $query);
 
 			if ((mysqli_num_rows($result) !== 0)){
 
+				// Auslesen von Benutzerdaten und abspeichern in Array
 				$markid = mysqli_real_escape_string($db, $_POST['fp_mark']);
 				$query = "SELECT Email, Email_optional FROM Person WHERE idPerson = (SELECT Person_idPerson FROM Gegenstand WHERE idMarker = '".$markid."' LIMIT 1) LIMIT 1";
 				$result = mysqli_query($db, $query);
@@ -374,6 +376,7 @@ if(isset($_POST['fp_mark'])) {
 							$row["Email_optional"],
 
 					];
+						// Auslesen von Finderlohn und abspeichern in Array
 						$query = "SELECT Finderlohn FROM Gegenstand WHERE idMarker = '".$markid."'";
 						$result = mysqli_query($db, $query);
 
@@ -385,7 +388,8 @@ if(isset($_POST['fp_mark'])) {
 										$row["Finderlohn"],
 
 								];
-
+								
+								// Zusammenfügen der beiden Arrays
 								$markerinfo = array_merge($markerinfo_pre, $markerfinderlohn);
 
 
@@ -404,7 +408,7 @@ if(isset($_POST['fp_mark'])) {
 
 			}
 
-
+	// json_encode zur späteren verarbeitung des Arrays durch Javascript/AJAX
 	echo json_encode($markerinfo);
 }
 
